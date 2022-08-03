@@ -12,7 +12,8 @@ type
     FMaxNumber: Integer;
     FName: string;
     //
-    function IsSimpleNumber(const ANumber: Integer; const AInitialIteratorValue: Integer = 3): Boolean;
+    function GetNextSimpleNumber(const ACurrentSimpleNumber: Integer): Integer;
+    function IsSimpleNumber(const ANumber: Integer; const AInitialIteratorValue: Integer): Boolean;
     procedure SaveCurrentNumberToFile;
   protected
     procedure Execute; override;
@@ -36,10 +37,30 @@ procedure TSimpleNumberWriterThread.Execute;
 begin
   // Get new simple number after the current one
   // Save it to the files
+
+  // Do not forget about Terminated check!
+end;
+
+function TSimpleNumberWriterThread.GetNextSimpleNumber(const ACurrentSimpleNumber: Integer): Integer;
+var
+  I: Integer;
+begin
+  Result := -1;
+  I := ACurrentSimpleNumber + 2;
+  while (I < FMaxNumber) do
+  begin
+    if IsSimpleNumber(I, ACurrentSimpleNumber) then
+    begin
+      Result := I;
+      Break;
+    end
+    else
+      Inc(I, 2);
+  end;
 end;
 
 function TSimpleNumberWriterThread.IsSimpleNumber(
-  const ANumber: Integer; const AInitialIteratorValue: Integer = 3): Boolean;
+  const ANumber: Integer; const AInitialIteratorValue: Integer): Boolean;
 var
   I: Integer;
 begin
@@ -54,8 +75,9 @@ begin
       begin
         Result := False;
         Break;
-      end;
-      Inc(I, 2);
+      end
+      else
+        Inc(I, 2);
     end;
   end;
 end;
