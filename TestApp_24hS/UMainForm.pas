@@ -10,10 +10,8 @@ type
   TfmMain = class(TForm)
     btnRunThreads: TButton;
     procedure btnRunThreadsClick(Sender: TObject);
-  private
-    { Private declarations }
-  public
-    { Public declarations }
+  strict private
+    FMainFile: TextFile;
   end;
 
 var
