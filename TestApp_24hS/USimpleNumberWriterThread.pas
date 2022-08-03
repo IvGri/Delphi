@@ -12,6 +12,7 @@ type
     FMaxNumber: Integer;
     FName: string;
     //
+    function IsSimpleNumber(const ANumber: Integer; const AInitialIteratorValue: Integer = 3): Boolean;
     procedure SaveCurrentNumberToFile;
   protected
     procedure Execute; override;
@@ -66,6 +67,28 @@ procedure TSimpleNumberWriterThread.Execute;
 begin
   NameThreadForDebugging('SimpleNumberWriter');
   { Place thread code here }
+end;
+
+function TSimpleNumberWriterThread.IsSimpleNumber(
+  const ANumber: Integer; const AInitialIteratorValue: Integer = 3): Boolean;
+var
+  I: Integer;
+begin
+  Result := ANumber = 2;
+  if (ANumber > 2) and not Odd(ANumber) then
+  begin
+    Result := True;
+    I := AInitialIteratorValue;
+    while I <= Sqrt(ANumber) do
+    begin
+      if (ANumber mod I) = 0 then
+      begin
+        Result := False;
+        Break;
+      end;
+      Inc(I, 2);
+    end;
+  end;
 end;
 
 procedure TSimpleNumberWriterThread.SaveCurrentNumberToFile;
