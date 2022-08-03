@@ -9,7 +9,6 @@ type
   TSimpleNumberWriterThread = class(TThread)
   strict private
     FCurrentNumberRef: PInteger;
-    FMainFile: TextFile;
     FMaxNumber: Integer;
     FName: string;
     //
