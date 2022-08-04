@@ -15,7 +15,7 @@ type
     //
     function GetNextSimpleNumber(const ACurrentSimpleNumber: Integer): Integer;
     function IsSimpleNumber(const ANumber: Integer): Boolean;
-    procedure SaveCurrentNumber;
+    procedure SaveCurrentNumber(const ACurrentSimpleNumber: Integer);
   protected
     procedure Execute; override;
   public
@@ -49,7 +49,7 @@ begin
     if FCanContinue then
     begin
       FCurrentNumberRef^ := ANewNumber;
-      SaveCurrentNumber;
+      SaveCurrentNumber(ANewNumber);
 //      Synchronize(SaveCurrentNumber);
     end;
   end;
@@ -98,9 +98,13 @@ begin
   end;
 end;
 
-procedure TSimpleNumberWriterThread.SaveCurrentNumber;
+procedure TSimpleNumberWriterThread.SaveCurrentNumber(const ACurrentSimpleNumber: Integer);
 begin
-  fmMain.mmResults.Lines.Add(FName + ': ' + IntToStr(FCurrentNumberRef^));
+  fmMain.mmResults.Lines.Add(FName + ': ' + IntToStr(ACurrentSimpleNumber));
+  if FName[Length(FName)] = '1' then
+    fmMain.Memo1.Lines.Add(FName + ': ' + IntToStr(ACurrentSimpleNumber))
+  else
+    fmMain.Memo2.Lines.Add(FName + ': ' + IntToStr(ACurrentSimpleNumber));
 end;
 
 end.
