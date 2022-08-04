@@ -10,6 +10,8 @@ type
   TfmMain = class(TForm)
     btnRunThreads: TButton;
     mmResults: TMemo;
+    Memo1: TMemo;
+    Memo2: TMemo;
     procedure btnRunThreadsClick(Sender: TObject);
   strict private
     FCurrentNumber: Integer;
@@ -35,7 +37,6 @@ begin
   Result.FreeOnTerminate := True;
   Result.Priority := tpNormal;
   TSimpleNumberWriterThread(Result).Initialize('Thread' + IntToStr(AIndex), @FCurrentNumber, FMaxNumber);
-  Result.Resume;
 end;
 
 procedure TfmMain.CreateThreads;
@@ -44,6 +45,9 @@ var
 begin
   AThread1 := AddThread(1);
   AThread2 := AddThread(2);
+
+  AThread1.Resume;
+  AThread2.Resume;
 end;
 
 procedure TfmMain.btnRunThreadsClick(Sender: TObject);
@@ -51,6 +55,8 @@ begin
   FCurrentNumber := 1;
   FMaxNumber := 100;
   mmResults.Clear;
+  Memo1.Clear;
+  Memo2.Clear;
   CreateThreads;
 end;
 

@@ -25,9 +25,25 @@ object fmMain: TfmMain
   object mmResults: TMemo
     Left = 8
     Top = 39
-    Width = 601
+    Width = 201
     Height = 202
     ScrollBars = ssVertical
     TabOrder = 1
+  end
+  object Memo1: TMemo
+    Left = 215
+    Top = 39
+    Width = 201
+    Height = 202
+    ScrollBars = ssVertical
+    TabOrder = 2
+  end
+  object Memo2: TMemo
+    Left = 422
+    Top = 39
+    Width = 201
+    Height = 202
+    ScrollBars = ssVertical
+    TabOrder = 3
   end
 end
