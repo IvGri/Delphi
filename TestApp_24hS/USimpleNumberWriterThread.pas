@@ -3,7 +3,7 @@ unit USimpleNumberWriterThread;
 interface
 
 uses
-  Classes, Windows, SysUtils;
+  Classes, Windows, SysUtils, SyncObjs;
 
 type
   TSimpleNumberWriterThread = class(TThread)
@@ -11,11 +11,12 @@ type
     FCurrentNumberRef: PInteger;
     FMaxNumber: Integer;
     FName: string;
+    FNewNumber: Integer;
     //
     function CanContinue: Boolean; inline;
     function GetNextSimpleNumber(const ACurrentSimpleNumber: Integer): Integer;
     function IsSimpleNumber(const ANumber: Integer): Boolean;
-    procedure SaveCurrentNumber(const ACurrentSimpleNumber: Integer);
+    procedure SaveNewNumber;
   protected
     procedure Execute; override;
   public
@@ -38,23 +39,20 @@ begin
 end;
 
 procedure TSimpleNumberWriterThread.Execute;
-var
-  ANewNumber: Integer;
 begin
   while not Terminated do
-  begin
     if fmMain.CriticalSection.TryEnter and CanContinue then
     begin
-      ANewNumber := GetNextSimpleNumber(FCurrentNumberRef^);
-      if (ANewNumber <> -1) and (ANewNumber < FMaxNumber) then
+      FNewNumber := GetNextSimpleNumber(FCurrentNumberRef^);
+      if (FNewNumber <> -1) and (FNewNumber < FMaxNumber) then
       begin
-        FCurrentNumberRef^ := ANewNumber;
-        SaveCurrentNumber(ANewNumber);
-  //      Synchronize(SaveCurrentNumber);
-      end;
+        FCurrentNumberRef^ := FNewNumber;
+        Synchronize(SaveNewNumber);
+      end
+      else
+        Terminate;
       fmMain.CriticalSection.Leave;
     end;
-  end;
 end;
 
 function TSimpleNumberWriterThread.CanContinue: Boolean;
@@ -105,13 +103,13 @@ begin
   end;
 end;
 
-procedure TSimpleNumberWriterThread.SaveCurrentNumber(const ACurrentSimpleNumber: Integer);
+procedure TSimpleNumberWriterThread.SaveNewNumber;
 begin
-  fmMain.mmResults.Lines.Add(FName + ': ' + IntToStr(ACurrentSimpleNumber));
+  fmMain.mmResults.Lines.Add(FName + ': ' + IntToStr(FNewNumber));
   if FName[Length(FName)] = '1' then
-    fmMain.Memo1.Lines.Add(FName + ': ' + IntToStr(ACurrentSimpleNumber))
+    fmMain.Memo1.Lines.Add(FName + ': ' + IntToStr(FNewNumber))
   else
-    fmMain.Memo2.Lines.Add(FName + ': ' + IntToStr(ACurrentSimpleNumber));
+    fmMain.Memo2.Lines.Add(FName + ': ' + IntToStr(FNewNumber));
 end;
 
 end.
