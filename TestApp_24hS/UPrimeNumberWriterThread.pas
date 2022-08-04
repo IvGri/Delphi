@@ -62,11 +62,14 @@ end;
 
 function TPrimeNumberWriterThread.GetNextPrimeNumber(const APrevPrimeNumber: Integer): Integer;
 var
-  I: Integer;
+  AStep, I: Integer;
 begin
   Result := -1;
-//  I := APrevPrimeNumber + 2;
-  I := APrevPrimeNumber + 1;
+  if APrevPrimeNumber >= 3 then
+    AStep := 2
+  else
+    AStep := 1;
+  I := APrevPrimeNumber + AStep;
   while (I < FMaxNumber) and not Terminated {Is needed?} do
   begin
     if IsPrimeNumber(I) then
@@ -75,8 +78,7 @@ begin
       Break;
     end
     else
-//      Inc(I, 2);
-      Inc(I);
+      Inc(I, AStep);
   end;
 end;
 
