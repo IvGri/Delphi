@@ -104,12 +104,18 @@ begin
 end;
 
 procedure TSimpleNumberWriterThread.SaveNewNumber;
+
+  procedure AppendLine(const ALineIndex: Integer; const AValue: string);
+  begin
+    fmMain.mmResults.Lines[ALineIndex] := fmMain.mmResults.Lines[ALineIndex] + AValue;
+  end;
+
+var
+  AAppendValue: string;
 begin
-  fmMain.mmResults.Lines.Add(FName + ': ' + IntToStr(FNewNumber));
-  if FName[Length(FName)] = '1' then
-    fmMain.Memo1.Lines.Add(FName + ': ' + IntToStr(FNewNumber))
-  else
-    fmMain.Memo2.Lines.Add(FName + ': ' + IntToStr(FNewNumber));
+  AAppendValue := IntToStr(FNewNumber) + ' ';
+  AppendLine(0, AAppendValue);
+  AppendLine(StrToInt(FName[Length(FName)]), AAppendValue);
 end;
 
 end.
