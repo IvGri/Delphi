@@ -19,6 +19,7 @@ object fmMain: TfmMain
     Width = 75
     Height = 73
     Caption = ' Run Test'
+    Default = True
     TabOrder = 0
     OnClick = btnRunThreadsClick
   end
