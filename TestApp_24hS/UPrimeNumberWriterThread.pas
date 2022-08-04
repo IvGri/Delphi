@@ -1,4 +1,4 @@
-unit USimpleNumberWriterThread;
+unit UPrimeNumberWriterThread;
 
 interface
 
@@ -6,7 +6,7 @@ uses
   Classes, Windows, SysUtils, SyncObjs;
 
 type
-  TSimpleNumberWriterThread = class(TThread)
+  TPrimeNumberWriterThread = class(TThread)
   strict private
     FCurrentNumberRef: PInteger;
     FMaxNumber: Integer;
@@ -14,8 +14,8 @@ type
     FNewNumber: Integer;
     //
     function CanContinue: Boolean; inline;
-    function GetNextSimpleNumber(const ACurrentSimpleNumber: Integer): Integer;
-    function IsSimpleNumber(const ANumber: Integer): Boolean;
+    function GetNextPrimeNumber(const ACurrentPrimeNumber: Integer): Integer;
+    function IsPrimeNumber(const ANumber: Integer): Boolean;
     procedure SaveNewNumber;
   protected
     procedure Execute; override;
@@ -28,9 +28,9 @@ implementation
 uses
   UMainForm; // TEMP!
 
-{ TSimpleNumberWriterThread }
+{ TPrimeNumberWriterThread }
 
-procedure TSimpleNumberWriterThread.Initialize(const AThreadName: string; ACurrentNumberRef: PInteger;
+procedure TPrimeNumberWriterThread.Initialize(const AThreadName: string; ACurrentNumberRef: PInteger;
   const AMaxNumber: Integer);
 begin
   FName := AThreadName;
@@ -38,12 +38,12 @@ begin
   FMaxNumber := AMaxNumber;
 end;
 
-procedure TSimpleNumberWriterThread.Execute;
+procedure TPrimeNumberWriterThread.Execute;
 begin
   while not Terminated do
     if fmMain.CriticalSection.TryEnter and CanContinue then
     begin
-      FNewNumber := GetNextSimpleNumber(FCurrentNumberRef^);
+      FNewNumber := GetNextPrimeNumber(FCurrentNumberRef^);
       if (FNewNumber <> -1) and (FNewNumber < FMaxNumber) then
       begin
         FCurrentNumberRef^ := FNewNumber;
@@ -55,21 +55,21 @@ begin
     end;
 end;
 
-function TSimpleNumberWriterThread.CanContinue: Boolean;
+function TPrimeNumberWriterThread.CanContinue: Boolean;
 begin
   Result := FCurrentNumberRef^ < FMaxNumber;
 end;
 
-function TSimpleNumberWriterThread.GetNextSimpleNumber(const ACurrentSimpleNumber: Integer): Integer;
+function TPrimeNumberWriterThread.GetNextPrimeNumber(const ACurrentPrimeNumber: Integer): Integer;
 var
   I: Integer;
 begin
   Result := -1;
-//  I := ACurrentSimpleNumber + 2;
-  I := ACurrentSimpleNumber + 1;
+//  I := ACurrentPrimeNumber + 2;
+  I := ACurrentPrimeNumber + 1;
   while (I < FMaxNumber) and not Terminated {Is needed?} do
   begin
-    if IsSimpleNumber(I) then
+    if IsPrimeNumber(I) then
     begin
       Result := I;
       Break;
@@ -80,7 +80,7 @@ begin
   end;
 end;
 
-function TSimpleNumberWriterThread.IsSimpleNumber(
+function TPrimeNumberWriterThread.IsPrimeNumber(
   const ANumber: Integer): Boolean;
 var
   I: Integer;
@@ -103,7 +103,7 @@ begin
   end;
 end;
 
-procedure TSimpleNumberWriterThread.SaveNewNumber;
+procedure TPrimeNumberWriterThread.SaveNewNumber;
 
   procedure AppendLine(const ALineIndex: Integer; const AValue: string);
   begin

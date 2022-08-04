@@ -37,7 +37,7 @@ implementation
 {$R *.dfm}
 
 uses
-  USimpleNumberWriterThread;
+  UPrimeNumberWriterThread;
 
 constructor TfmMain.Create(AOwner: TComponent);
 begin
@@ -53,10 +53,10 @@ end;
 
 function TfmMain.AddThread(const AIndex: Integer): TThread;
 begin
-  Result := TSimpleNumberWriterThread.Create(True);
+  Result := TPrimeNumberWriterThread.Create(True);
   Result.FreeOnTerminate := True;
   Result.Priority := tpNormal;
-  TSimpleNumberWriterThread(Result).Initialize('Thread' + IntToStr(AIndex), @FCurrentNumber, seMaxValue.Value);
+  TPrimeNumberWriterThread(Result).Initialize('Thread' + IntToStr(AIndex), @FCurrentNumber, seMaxValue.Value);
 end;
 
 procedure TfmMain.CreateThreads;
