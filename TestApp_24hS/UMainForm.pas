@@ -4,23 +4,26 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, StdCtrls, SyncObjs;
+  Dialogs, StdCtrls, SyncObjs, Vcl.Samples.Spin;
 
 type
   TfmMain = class(TForm)
     btnRunThreads: TButton;
     mmResults: TMemo;
-    Memo1: TMemo;
-    Memo2: TMemo;
+    gbParams: TGroupBox;
+    seMaxValue: TSpinEdit;
+    lbMaxValue: TLabel;
+    lbThreadsCount: TLabel;
+    seThreadsCount: TSpinEdit;
     procedure btnRunThreadsClick(Sender: TObject);
   strict private
     FCriticalSection: TCriticalSection;
     FCurrentNumber: Integer;
-    FMaxNumber: Integer; // Temp
-//    FMainFile: TextFile;
+    //
     function AddThread(const AIndex: Integer): TThread;
     procedure CreateThreads;
   public
+    constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
     //
     property CriticalSection: TCriticalSection read FCriticalSection;
@@ -36,6 +39,12 @@ implementation
 uses
   USimpleNumberWriterThread;
 
+constructor TfmMain.Create(AOwner: TComponent);
+begin
+  inherited;
+  FCriticalSection := TCriticalSection.Create;
+end;
+
 destructor TfmMain.Destroy;
 begin
   FreeAndNil(FCriticalSection);
@@ -47,29 +56,33 @@ begin
   Result := TSimpleNumberWriterThread.Create(True);
   Result.FreeOnTerminate := True;
   Result.Priority := tpNormal;
-  TSimpleNumberWriterThread(Result).Initialize('Thread' + IntToStr(AIndex), @FCurrentNumber, FMaxNumber);
+  TSimpleNumberWriterThread(Result).Initialize('Thread' + IntToStr(AIndex), @FCurrentNumber, seMaxValue.Value);
 end;
 
 procedure TfmMain.CreateThreads;
 var
-  AThread1, AThread2: TThread;
+  AThread1, AThread2, AThread4, AThread3: TThread;
 begin
-  FCriticalSection := TCriticalSection.Create;
+
 
   AThread1 := AddThread(1);
   AThread2 := AddThread(2);
+//  AThread3 := AddThread(3);
+//  AThread4 := AddThread(4);
 
   AThread1.Resume;
   AThread2.Resume;
+//  AThread3.Resume;
+//  AThread4.Resume;
 end;
 
 procedure TfmMain.btnRunThreadsClick(Sender: TObject);
 begin
   FCurrentNumber := 1;
-  FMaxNumber := 100;
   mmResults.Clear;
-  Memo1.Clear;
-  Memo2.Clear;
+  mmResults.Lines.Add('All: ');
+  mmResults.Lines.Add('Thread 1: ');
+  mmResults.Lines.Add('Thread 2: ');
   CreateThreads;
 end;
 
