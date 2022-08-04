@@ -1,9 +1,10 @@
 program TestApp;
 
 uses
+  FastMM5,
   Forms,
   UMainForm in 'UMainForm.pas' {fmMain},
-  USimpleNumberWriterThread in 'USimpleNumberWriterThread.pas';
+  UPrimeNumberWriterThread in 'UPrimeNumberWriterThread.pas';
 
 {$R *.res}
 
