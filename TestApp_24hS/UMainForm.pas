@@ -9,6 +9,7 @@ uses
 type
   TfmMain = class(TForm)
     btnRunThreads: TButton;
+    mmResults: TMemo;
     procedure btnRunThreadsClick(Sender: TObject);
   strict private
     FMainFile: TextFile;
