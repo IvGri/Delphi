@@ -18,9 +18,12 @@ type
   strict private
     FCriticalSection: TCriticalSection;
     FPrimeNumber: Integer;
+    FThreadsArray: array of TThread;
     //
     function AddThread(const AIndex: Integer): TThread;
     procedure CreateThreads;
+    procedure PrepareResultsStorage;
+    procedure RunThreads;
   public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
@@ -55,34 +58,43 @@ begin
   Result := TPrimeNumberWriterThread.Create(True);
   Result.FreeOnTerminate := True;
   Result.Priority := tpNormal;
-  TPrimeNumberWriterThread(Result).Initialize('Thread' + IntToStr(AIndex), @FPrimeNumber, seMaxValue.Value);
+  TPrimeNumberWriterThread(Result).Initialize(AIndex, @FPrimeNumber, seMaxValue.Value);
 end;
 
 procedure TfmMain.CreateThreads;
 var
-  AThread1, AThread2, AThread4, AThread3: TThread;
+  I: Integer;
 begin
+  SetLength(FThreadsArray, seThreadsCount.Value);
 
+  for I := 1 to Length(FThreadsArray) do
+    FThreadsArray[I - 1] := AddThread(I);
+end;
 
-  AThread1 := AddThread(1);
-  AThread2 := AddThread(2);
-//  AThread3 := AddThread(3);
-//  AThread4 := AddThread(4);
+procedure TfmMain.PrepareResultsStorage;
+var
+  I: Integer;
+begin
+  mmResults.Clear;
+  mmResults.Lines.Add('All: ');
+  for I := 1 to Length(FThreadsArray) do
+    mmResults.Lines.Add('Thread ' + IntToStr(I) + ': ');
+end;
 
-  AThread1.Resume;
-  AThread2.Resume;
-//  AThread3.Resume;
-//  AThread4.Resume;
+procedure TfmMain.RunThreads;
+var
+  I: Integer;
+begin
+  for I := 0 to Length(FThreadsArray) - 1 do
+    FThreadsArray[I].Resume;
 end;
 
 procedure TfmMain.btnRunThreadsClick(Sender: TObject);
 begin
   FPrimeNumber := 1;
-  mmResults.Clear;
-  mmResults.Lines.Add('All: ');
-  mmResults.Lines.Add('Thread 1: ');
-  mmResults.Lines.Add('Thread 2: ');
   CreateThreads;
+  PrepareResultsStorage;
+  RunThreads;
 end;
 
 end.

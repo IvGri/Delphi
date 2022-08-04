@@ -10,8 +10,8 @@ type
   strict private
     FPrimeNumberRef: PInteger;
     FMaxNumber: Integer;
-    FName: string;
     FNewNumber: Integer;
+    FThreadIndex: Integer;
     //
     function CanContinue: Boolean; inline;
     function GetNextPrimeNumber(const APrevPrimeNumber: Integer): Integer;
@@ -20,7 +20,7 @@ type
   protected
     procedure Execute; override;
   public
-    procedure Initialize(const AThreadName: string; APrimeNumberRef: PInteger; const AMaxNumber: Integer);
+    procedure Initialize(const AThreadIndex: Integer; APrimeNumberRef: PInteger; const AMaxNumber: Integer);
   end;
 
 implementation
@@ -30,10 +30,10 @@ uses
 
 { TPrimeNumberWriterThread }
 
-procedure TPrimeNumberWriterThread.Initialize(const AThreadName: string; APrimeNumberRef: PInteger;
+procedure TPrimeNumberWriterThread.Initialize(const AThreadIndex: Integer; APrimeNumberRef: PInteger;
   const AMaxNumber: Integer);
 begin
-  FName := AThreadName;
+  FThreadIndex := AThreadIndex;
   FPrimeNumberRef := APrimeNumberRef;
   FMaxNumber := AMaxNumber;
 end;
@@ -115,7 +115,7 @@ var
 begin
   AAppendValue := IntToStr(FNewNumber) + ' ';
   AppendLine(0, AAppendValue);
-  AppendLine(StrToInt(FName[Length(FName)]), AAppendValue);
+  AppendLine(FThreadIndex, AAppendValue);
 end;
 
 end.
