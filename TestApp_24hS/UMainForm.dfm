@@ -13,13 +13,6 @@ object fmMain: TfmMain
   OldCreateOrder = False
   PixelsPerInch = 96
   TextHeight = 13
-  object lbThreadsCount: TLabel
-    Left = 24
-    Top = 55
-    Width = 73
-    Height = 13
-    Caption = 'Threads count:'
-  end
   object btnRunThreads: TButton
     Left = 207
     Top = 8
@@ -51,6 +44,13 @@ object fmMain: TfmMain
       Height = 13
       Caption = 'Max value:'
     end
+    object lbThreadsCount: TLabel
+      Left = 16
+      Top = 47
+      Width = 73
+      Height = 13
+      Caption = 'Threads count:'
+    end
     object seMaxValue: TSpinEdit
       Left = 95
       Top = 16
@@ -62,15 +62,15 @@ object fmMain: TfmMain
       TabOrder = 0
       Value = 100
     end
-  end
-  object seThreadsCount: TSpinEdit
-    Left = 103
-    Top = 52
-    Width = 86
-    Height = 22
-    MaxValue = 8
-    MinValue = 1
-    TabOrder = 3
-    Value = 2
+    object seThreadsCount: TSpinEdit
+      Left = 95
+      Top = 44
+      Width = 86
+      Height = 22
+      MaxValue = 32
+      MinValue = 1
+      TabOrder = 1
+      Value = 2
+    end
   end
 end

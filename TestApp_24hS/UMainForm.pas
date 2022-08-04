@@ -14,16 +14,22 @@ type
     lbMaxValue: TLabel;
     lbThreadsCount: TLabel;
     seThreadsCount: TSpinEdit;
+    procedure ThreadTerminationHandler(Sender: TObject);
     procedure btnRunThreadsClick(Sender: TObject);
   strict private
+    FActiveThreadsCount: Integer;
     FCriticalSection: TCriticalSection;
     FPrimeNumber: Integer;
     FThreadsArray: array of TThread;
     //
     function AddThread(const AIndex: Integer): TThread;
+    procedure ChangeControlsState(const AEnabled: Boolean);
     procedure CreateThreads;
     procedure PrepareResultsStorage;
     procedure RunThreads;
+    procedure SetActiveThreadsCount(const AValue: Integer);
+  protected
+    property ActiveThreadsCount: Integer read FActiveThreadsCount write SetActiveThreadsCount;
   public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
@@ -40,6 +46,8 @@ implementation
 
 uses
   UPrimeNumberWriterThread;
+
+{ TfmMain }
 
 constructor TfmMain.Create(AOwner: TComponent);
 begin
@@ -58,7 +66,18 @@ begin
   Result := TPrimeNumberWriterThread.Create(True);
   Result.FreeOnTerminate := True;
   Result.Priority := tpNormal;
+  Result.OnTerminate := ThreadTerminationHandler;
   TPrimeNumberWriterThread(Result).Initialize(AIndex, @FPrimeNumber, seMaxValue.Value);
+end;
+
+procedure TfmMain.ChangeControlsState(const AEnabled: Boolean);
+begin
+  gbParams.Enabled := AEnabled;
+  btnRunThreads.Enabled := AEnabled;
+  if AEnabled then
+    Cursor := crDefault
+  else
+    Cursor := crHourGlass;
 end;
 
 procedure TfmMain.CreateThreads;
@@ -85,8 +104,28 @@ procedure TfmMain.RunThreads;
 var
   I: Integer;
 begin
+  FActiveThreadsCount := 0;
+  ChangeControlsState(False);
   for I := 0 to Length(FThreadsArray) - 1 do
+  begin
     FThreadsArray[I].Resume;
+    Inc(FActiveThreadsCount);
+  end;
+end;
+
+procedure TfmMain.SetActiveThreadsCount(const AValue: Integer);
+begin
+  if FActiveThreadsCount <> AValue then
+  begin
+    FActiveThreadsCount := AValue;
+    if FActiveThreadsCount = 0 then
+      ChangeControlsState(True);
+  end;
+end;
+
+procedure TfmMain.ThreadTerminationHandler(Sender: TObject);
+begin
+  ActiveThreadsCount := ActiveThreadsCount - 1;
 end;
 
 procedure TfmMain.btnRunThreadsClick(Sender: TObject);
