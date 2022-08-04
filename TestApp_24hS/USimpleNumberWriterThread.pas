@@ -8,11 +8,11 @@ uses
 type
   TSimpleNumberWriterThread = class(TThread)
   strict private
-    FCanContinue: Boolean;
     FCurrentNumberRef: PInteger;
     FMaxNumber: Integer;
     FName: string;
     //
+    function CanContinue: Boolean; inline;
     function GetNextSimpleNumber(const ACurrentSimpleNumber: Integer): Integer;
     function IsSimpleNumber(const ANumber: Integer): Boolean;
     procedure SaveCurrentNumber(const ACurrentSimpleNumber: Integer);
@@ -35,24 +35,31 @@ begin
   FName := AThreadName;
   FCurrentNumberRef := ACurrentNumberRef;
   FMaxNumber := AMaxNumber;
-  FCanContinue := ACurrentNumberRef^ < FMaxNumber;
 end;
 
 procedure TSimpleNumberWriterThread.Execute;
 var
   ANewNumber: Integer;
 begin
-  while not Terminated and FCanContinue do
+  while not Terminated do
   begin
-    ANewNumber := GetNextSimpleNumber(FCurrentNumberRef^);
-    FCanContinue := (ANewNumber <> -1) and (ANewNumber < FMaxNumber);
-    if FCanContinue then
+    if fmMain.CriticalSection.TryEnter and CanContinue then
     begin
-      FCurrentNumberRef^ := ANewNumber;
-      SaveCurrentNumber(ANewNumber);
-//      Synchronize(SaveCurrentNumber);
+      ANewNumber := GetNextSimpleNumber(FCurrentNumberRef^);
+      if (ANewNumber <> -1) and (ANewNumber < FMaxNumber) then
+      begin
+        FCurrentNumberRef^ := ANewNumber;
+        SaveCurrentNumber(ANewNumber);
+  //      Synchronize(SaveCurrentNumber);
+      end;
+      fmMain.CriticalSection.Leave;
     end;
   end;
+end;
+
+function TSimpleNumberWriterThread.CanContinue: Boolean;
+begin
+  Result := FCurrentNumberRef^ < FMaxNumber;
 end;
 
 function TSimpleNumberWriterThread.GetNextSimpleNumber(const ACurrentSimpleNumber: Integer): Integer;

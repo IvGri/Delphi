@@ -4,7 +4,7 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, StdCtrls;
+  Dialogs, StdCtrls, SyncObjs;
 
 type
   TfmMain = class(TForm)
@@ -14,11 +14,16 @@ type
     Memo2: TMemo;
     procedure btnRunThreadsClick(Sender: TObject);
   strict private
+    FCriticalSection: TCriticalSection;
     FCurrentNumber: Integer;
     FMaxNumber: Integer; // Temp
 //    FMainFile: TextFile;
     function AddThread(const AIndex: Integer): TThread;
     procedure CreateThreads;
+  public
+    destructor Destroy; override;
+    //
+    property CriticalSection: TCriticalSection read FCriticalSection;
   end;
 
 var
@@ -30,6 +35,12 @@ implementation
 
 uses
   USimpleNumberWriterThread;
+
+destructor TfmMain.Destroy;
+begin
+  FreeAndNil(FCriticalSection);
+  inherited;
+end;
 
 function TfmMain.AddThread(const AIndex: Integer): TThread;
 begin
@@ -43,6 +54,8 @@ procedure TfmMain.CreateThreads;
 var
   AThread1, AThread2: TThread;
 begin
+  FCriticalSection := TCriticalSection.Create;
+
   AThread1 := AddThread(1);
   AThread2 := AddThread(2);
 
