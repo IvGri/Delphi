@@ -27,6 +27,7 @@ object fmMain: TfmMain
     Top = 39
     Width = 601
     Height = 202
+    ScrollBars = ssVertical
     TabOrder = 1
   end
 end
