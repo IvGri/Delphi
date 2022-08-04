@@ -3,8 +3,7 @@ unit UMainForm;
 interface
 
 uses
-  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, StdCtrls, SyncObjs, Vcl.Samples.Spin;
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms, Dialogs, StdCtrls, SyncObjs, Spin;
 
 type
   TfmMain = class(TForm)
@@ -18,7 +17,7 @@ type
     procedure btnRunThreadsClick(Sender: TObject);
   strict private
     FCriticalSection: TCriticalSection;
-    FCurrentNumber: Integer;
+    FPrimeNumber: Integer;
     //
     function AddThread(const AIndex: Integer): TThread;
     procedure CreateThreads;
@@ -56,7 +55,7 @@ begin
   Result := TPrimeNumberWriterThread.Create(True);
   Result.FreeOnTerminate := True;
   Result.Priority := tpNormal;
-  TPrimeNumberWriterThread(Result).Initialize('Thread' + IntToStr(AIndex), @FCurrentNumber, seMaxValue.Value);
+  TPrimeNumberWriterThread(Result).Initialize('Thread' + IntToStr(AIndex), @FPrimeNumber, seMaxValue.Value);
 end;
 
 procedure TfmMain.CreateThreads;
@@ -78,7 +77,7 @@ end;
 
 procedure TfmMain.btnRunThreadsClick(Sender: TObject);
 begin
-  FCurrentNumber := 1;
+  FPrimeNumber := 1;
   mmResults.Clear;
   mmResults.Lines.Add('All: ');
   mmResults.Lines.Add('Thread 1: ');

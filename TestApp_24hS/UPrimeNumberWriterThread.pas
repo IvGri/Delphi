@@ -8,19 +8,19 @@ uses
 type
   TPrimeNumberWriterThread = class(TThread)
   strict private
-    FCurrentNumberRef: PInteger;
+    FPrimeNumberRef: PInteger;
     FMaxNumber: Integer;
     FName: string;
     FNewNumber: Integer;
     //
     function CanContinue: Boolean; inline;
-    function GetNextPrimeNumber(const ACurrentPrimeNumber: Integer): Integer;
+    function GetNextPrimeNumber(const APrevPrimeNumber: Integer): Integer;
     function IsPrimeNumber(const ANumber: Integer): Boolean;
     procedure SaveNewNumber;
   protected
     procedure Execute; override;
   public
-    procedure Initialize(const AThreadName: string; ACurrentNumberRef: PInteger; const AMaxNumber: Integer);
+    procedure Initialize(const AThreadName: string; APrimeNumberRef: PInteger; const AMaxNumber: Integer);
   end;
 
 implementation
@@ -30,11 +30,11 @@ uses
 
 { TPrimeNumberWriterThread }
 
-procedure TPrimeNumberWriterThread.Initialize(const AThreadName: string; ACurrentNumberRef: PInteger;
+procedure TPrimeNumberWriterThread.Initialize(const AThreadName: string; APrimeNumberRef: PInteger;
   const AMaxNumber: Integer);
 begin
   FName := AThreadName;
-  FCurrentNumberRef := ACurrentNumberRef;
+  FPrimeNumberRef := APrimeNumberRef;
   FMaxNumber := AMaxNumber;
 end;
 
@@ -43,10 +43,10 @@ begin
   while not Terminated do
     if fmMain.CriticalSection.TryEnter and CanContinue then
     begin
-      FNewNumber := GetNextPrimeNumber(FCurrentNumberRef^);
+      FNewNumber := GetNextPrimeNumber(FPrimeNumberRef^);
       if (FNewNumber <> -1) and (FNewNumber < FMaxNumber) then
       begin
-        FCurrentNumberRef^ := FNewNumber;
+        FPrimeNumberRef^ := FNewNumber;
         Synchronize(SaveNewNumber);
       end
       else
@@ -57,16 +57,16 @@ end;
 
 function TPrimeNumberWriterThread.CanContinue: Boolean;
 begin
-  Result := FCurrentNumberRef^ < FMaxNumber;
+  Result := FPrimeNumberRef^ < FMaxNumber;
 end;
 
-function TPrimeNumberWriterThread.GetNextPrimeNumber(const ACurrentPrimeNumber: Integer): Integer;
+function TPrimeNumberWriterThread.GetNextPrimeNumber(const APrevPrimeNumber: Integer): Integer;
 var
   I: Integer;
 begin
   Result := -1;
-//  I := ACurrentPrimeNumber + 2;
-  I := ACurrentPrimeNumber + 1;
+//  I := APrevPrimeNumber + 2;
+  I := APrevPrimeNumber + 1;
   while (I < FMaxNumber) and not Terminated {Is needed?} do
   begin
     if IsPrimeNumber(I) then
