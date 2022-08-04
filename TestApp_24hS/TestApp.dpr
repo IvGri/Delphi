@@ -1,7 +1,6 @@
 program TestApp;
 
 uses
-  FastMM5,
   Forms,
   UMainForm in 'UMainForm.pas' {fmMain},
   UPrimeNumberWriterThread in 'UPrimeNumberWriterThread.pas';

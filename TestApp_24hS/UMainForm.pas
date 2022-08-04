@@ -22,13 +22,14 @@ type
     FPrimeNumber: Integer;
     FThreadsArray: array of TThread;
     //
+    procedure SetActiveThreadsCount(const AValue: Integer);
+  protected
     function AddThread(const AIndex: Integer): TThread;
     procedure ChangeControlsState(const AEnabled: Boolean);
     procedure CreateThreads;
     procedure PrepareResultsStorage;
     procedure RunThreads;
-    procedure SetActiveThreadsCount(const AValue: Integer);
-  protected
+    //
     property ActiveThreadsCount: Integer read FActiveThreadsCount write SetActiveThreadsCount;
   public
     constructor Create(AOwner: TComponent); override;
@@ -85,7 +86,6 @@ var
   I: Integer;
 begin
   SetLength(FThreadsArray, seThreadsCount.Value);
-
   for I := 1 to Length(FThreadsArray) do
     FThreadsArray[I - 1] := AddThread(I);
 end;
@@ -96,7 +96,7 @@ var
 begin
   mmResults.Clear;
   mmResults.Lines.Add('All: ');
-  for I := 1 to Length(FThreadsArray) do
+  for I := 1 to seThreadsCount.Value do
     mmResults.Lines.Add('Thread ' + IntToStr(I) + ': ');
 end;
 
@@ -131,8 +131,8 @@ end;
 procedure TfmMain.btnRunThreadsClick(Sender: TObject);
 begin
   FPrimeNumber := 1;
-  CreateThreads;
   PrepareResultsStorage;
+  CreateThreads;
   RunThreads;
 end;
 
