@@ -92,7 +92,7 @@ object fmMain: TfmMain
       MaxValue = 100000000
       MinValue = 2
       TabOrder = 0
-      Value = 100
+      Value = 1000000
       OnChange = WarningsVisibilityUpdateHandler
     end
     object seThreadsCount: TSpinEdit
