@@ -29,7 +29,7 @@ type
 implementation
 
 uses
-  UMainForm; // TEMP!
+  UMainForm;
 
 { TPrimeNumberWriterThread }
 
@@ -122,18 +122,20 @@ begin
 end;
 
 procedure TPrimeNumberWriterThread.SaveNewNumber;
-
-  procedure AppendLine(const ALineIndex: Integer; const AValue: string);
-  begin
-    fmMain.mmResults.Lines[ALineIndex] := fmMain.mmResults.Lines[ALineIndex] + AValue;
-  end;
-
+//
+//  procedure AppendLine(const ALineIndex: Integer; const AValue: string);
+//  begin
+//    fmMain.mmResults.Lines[ALineIndex] := fmMain.mmResults.Lines[ALineIndex] + AValue;
+//  end;
+//
 var
   AAppendValue: string;
 begin
   AAppendValue := IntToStr(FNewNumber) + ' ';
-  AppendLine(0, AAppendValue);
-  AppendLine(FThreadIndex, AAppendValue);
+//  AppendLine(0, AAppendValue);
+//  AppendLine(FThreadIndex, AAppendValue);
+  Writeln(fmMain.ResultFile, AAppendValue);
+  Writeln(FResultFile, AAppendValue);
 end;
 
 end.
