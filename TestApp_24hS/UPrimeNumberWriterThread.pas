@@ -11,14 +11,17 @@ type
     FPrimeNumberRef: PInteger;
     FMaxNumber: Integer;
     FNewNumber: Integer;
+    FResultFile: TextFile;
     FThreadIndex: Integer;
-    //
-    function CanContinue: Boolean; inline;
-    function GetNextPrimeNumber(const APrevPrimeNumber: Integer): Integer;
-    function IsPrimeNumber(const ANumber: Integer): Boolean;
-    procedure SaveNewNumber;
   protected
     procedure Execute; override;
+    //
+    function CanContinue: Boolean; inline;
+    procedure CloseResultFile;
+    function GetNextPrimeNumber(const APrevPrimeNumber: Integer): Integer;
+    function IsPrimeNumber(const ANumber: Integer): Boolean;
+    procedure OpenResultFile;
+    procedure SaveNewNumber;
   public
     procedure Initialize(const AThreadIndex: Integer; APrimeNumberRef: PInteger; const AMaxNumber: Integer);
   end;
@@ -40,6 +43,7 @@ end;
 
 procedure TPrimeNumberWriterThread.Execute;
 begin
+  OpenResultFile;
   while not Terminated do
     if fmMain.CriticalSection.TryEnter and CanContinue then
     begin
@@ -53,11 +57,17 @@ begin
         Terminate;
       fmMain.CriticalSection.Leave;
     end;
+  CloseResultFile;
 end;
 
 function TPrimeNumberWriterThread.CanContinue: Boolean;
 begin
   Result := FPrimeNumberRef^ < FMaxNumber;
+end;
+
+procedure TPrimeNumberWriterThread.CloseResultFile;
+begin
+  CloseFile(FResultFile);
 end;
 
 function TPrimeNumberWriterThread.GetNextPrimeNumber(const APrevPrimeNumber: Integer): Integer;
@@ -103,6 +113,12 @@ begin
         Inc(I, 2);
     end;
   end;
+end;
+
+procedure TPrimeNumberWriterThread.OpenResultFile;
+begin
+  AssignFile(FResultFile, 'Thread' + IntToStr(FThreadIndex) + '.txt');
+  Rewrite(FResultFile);
 end;
 
 procedure TPrimeNumberWriterThread.SaveNewNumber;
