@@ -33,6 +33,7 @@ type
     destructor Destroy; override;
     //
     property CriticalSection: TCriticalSection read FCriticalSection;
+    property ResultFile: TextFile read FResultFile;
   end;
 
 var
