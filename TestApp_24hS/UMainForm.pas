@@ -3,7 +3,8 @@ unit UMainForm;
 interface
 
 uses
-  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms, Dialogs, StdCtrls, SyncObjs, Spin;
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms, Dialogs, StdCtrls, SyncObjs, Spin,
+  ExtCtrls;
 
 type
   TfmMain = class(TForm)
@@ -14,7 +15,11 @@ type
     lbMaxValue: TLabel;
     lbThreadsCount: TLabel;
     seThreadsCount: TSpinEdit;
+    chbStoreResultToMemo: TCheckBox;
+    lbWarning1: TLabel;
+    lbWarning2: TLabel;
     procedure ThreadTerminationHandler(Sender: TObject);
+    procedure WarningsVisibilityUpdateHandler(Sender: TObject);
     procedure btnRunThreadsClick(Sender: TObject);
   strict private
     FActiveThreadsCount: Integer;
@@ -89,15 +94,20 @@ begin
 end;
 
 procedure TfmMain.PrepareResultsStorage;
-//var
-//  I: Integer;
+var
+  I: Integer;
 begin
-//  mmResults.Clear;
-//  mmResults.Lines.Add('All: ');
-//  for I := 1 to seThreadsCount.Value do
-//    mmResults.Lines.Add('Thread ' + IntToStr(I) + ': ');
   AssignFile(FResultFile, 'Result.txt');
   Rewrite(FResultFile);
+  //
+  mmResults.Visible := chbStoreResultToMemo.Checked;
+  if mmResults.Visible then
+  begin
+    mmResults.Clear;
+    mmResults.Lines.Add('All: ');
+    for I := 1 to seThreadsCount.Value do
+      mmResults.Lines.Add('Thread ' + IntToStr(I) + ': ');
+  end;
 end;
 
 procedure TfmMain.RunThreads;
@@ -121,6 +131,12 @@ begin
     ChangeControlsState(True);
     CloseFile(FResultFile);
   end;
+end;
+
+procedure TfmMain.WarningsVisibilityUpdateHandler(Sender: TObject);
+begin
+  lbWarning1.Visible := (seMaxValue.Value > 2000) and chbStoreResultToMemo.Checked;
+  lbWarning2.Visible := lbWarning1.Visible;
 end;
 
 procedure TfmMain.btnRunThreadsClick(Sender: TObject);

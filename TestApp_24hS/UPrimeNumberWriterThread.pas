@@ -80,7 +80,7 @@ begin
   else
     AStep := 1;
   I := APrevPrimeNumber + AStep;
-  while (I < FMaxNumber) and not Terminated {Is needed?} do
+  while (I < FMaxNumber) and not Terminated do
   begin
     if IsPrimeNumber(I) then
     begin
@@ -102,7 +102,7 @@ begin
   begin
     Result := True;
     I := 3;
-    while (I <= Sqrt(ANumber)) and not Terminated {Is needed?} do
+    while (I <= Sqrt(ANumber)) and not Terminated do
     begin
       if (ANumber mod I) = 0 then
       begin
@@ -122,20 +122,25 @@ begin
 end;
 
 procedure TPrimeNumberWriterThread.SaveNewNumber;
-//
-//  procedure AppendLine(const ALineIndex: Integer; const AValue: string);
-//  begin
-//    fmMain.mmResults.Lines[ALineIndex] := fmMain.mmResults.Lines[ALineIndex] + AValue;
-//  end;
-//
+
+  procedure AppendLine(const ALineIndex: Integer; const AValue: string);
+  begin
+    fmMain.mmResults.Lines[ALineIndex] := fmMain.mmResults.Lines[ALineIndex] + AValue;
+  end;
+
 var
   AAppendValue: string;
 begin
   AAppendValue := IntToStr(FNewNumber) + ' ';
-//  AppendLine(0, AAppendValue);
-//  AppendLine(FThreadIndex, AAppendValue);
-  Writeln(fmMain.ResultFile, AAppendValue);
-  Writeln(FResultFile, AAppendValue);
+  //
+  Write(fmMain.ResultFile, AAppendValue);
+  Write(FResultFile, AAppendValue);
+  //
+  if fmMain.mmResults.Visible then
+  begin
+    AppendLine(0, AAppendValue);
+    AppendLine(FThreadIndex, AAppendValue);
+  end;
 end;
 
 end.
