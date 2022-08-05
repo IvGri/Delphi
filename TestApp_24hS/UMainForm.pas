@@ -18,6 +18,11 @@ type
     chbStoreResultToMemo: TCheckBox;
     lbWarning1: TLabel;
     lbWarning2: TLabel;
+    gbResults: TGroupBox;
+    lbResultsCountCaption: TLabel;
+    lbTestDurationCaption: TLabel;
+    lbResultsCount: TLabel;
+    lbTestDuration: TLabel;
     procedure ThreadTerminationHandler(Sender: TObject);
     procedure WarningsVisibilityUpdateHandler(Sender: TObject);
     procedure btnRunThreadsClick(Sender: TObject);
@@ -25,7 +30,9 @@ type
     FActiveThreadsCount: Integer;
     FCriticalSection: TCriticalSection;
     FPrimeNumber: Integer;
+    FPrimeNumberCount: Integer;
     FResultFile: TextFile;
+    FTestStartTime: TTime;
     FThreadsArray: array of TThread;
   protected
     function AddThread(const AIndex: Integer): TThread;
@@ -38,6 +45,7 @@ type
     destructor Destroy; override;
     //
     property CriticalSection: TCriticalSection read FCriticalSection;
+    property PrimeNumberCount: Integer read FPrimeNumberCount write FPrimeNumberCount;
     property ResultFile: TextFile read FResultFile;
   end;
 
@@ -121,6 +129,7 @@ begin
     FThreadsArray[I].Resume;
     Inc(FActiveThreadsCount);
   end;
+  FTestStartTime := Time;
 end;
 
 procedure TfmMain.ThreadTerminationHandler(Sender: TObject);
@@ -128,8 +137,12 @@ begin
   Dec(FActiveThreadsCount);
   if FActiveThreadsCount = 0 then
   begin
+    FTestStartTime := Time - FTestStartTime;
     ChangeControlsState(True);
     CloseFile(FResultFile);
+    gbResults.Visible := True;
+    lbResultsCount.Caption := IntToStr(FPrimeNumberCount);
+    lbTestDuration.Caption := TimeToStr(FTestStartTime) + ' seconds';
   end;
 end;
 
@@ -142,6 +155,7 @@ end;
 procedure TfmMain.btnRunThreadsClick(Sender: TObject);
 begin
   FPrimeNumber := 1;
+  FPrimeNumberCount := 0;
   PrepareResultsStorage;
   CreateThreads;
   RunThreads;

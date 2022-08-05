@@ -132,6 +132,7 @@ var
   AAppendValue: string;
 begin
   AAppendValue := IntToStr(FNewNumber) + ' ';
+  fmMain.PrimeNumberCount := fmMain.PrimeNumberCount + 1;
   //
   Write(fmMain.ResultFile, AAppendValue);
   Write(FResultFile, AAppendValue);

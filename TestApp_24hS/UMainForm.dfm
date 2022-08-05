@@ -27,7 +27,7 @@ object fmMain: TfmMain
   object mmResults: TMemo
     Left = 0
     Top = 103
-    Width = 461
+    Width = 460
     Height = 145
     ReadOnly = True
     ScrollBars = ssBoth
@@ -119,6 +119,43 @@ object fmMain: TfmMain
       ShowHint = True
       TabOrder = 2
       OnClick = WarningsVisibilityUpdateHandler
+    end
+  end
+  object gbResults: TGroupBox
+    Left = 280
+    Top = 0
+    Width = 181
+    Height = 97
+    Caption = 'Test results'
+    TabOrder = 3
+    Visible = False
+    object lbResultsCountCaption: TLabel
+      Left = 16
+      Top = 19
+      Width = 119
+      Height = 13
+      Caption = 'Count of prime numbers:'
+    end
+    object lbTestDurationCaption: TLabel
+      Left = 16
+      Top = 57
+      Width = 80
+      Height = 13
+      Caption = 'Duration of test:'
+    end
+    object lbResultsCount: TLabel
+      Left = 40
+      Top = 38
+      Width = 17
+      Height = 13
+      Caption = '%d'
+    end
+    object lbTestDuration: TLabel
+      Left = 40
+      Top = 76
+      Width = 58
+      Height = 13
+      Caption = '%s seconds'
     end
   end
 end
