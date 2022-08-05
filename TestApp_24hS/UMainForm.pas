@@ -103,10 +103,18 @@ end;
 
 procedure TfmMain.PrepareResultsStorage;
 var
+  AFileName: string;
   I: Integer;
 begin
   AssignFile(FResultFile, 'Result.txt');
   Rewrite(FResultFile);
+  for I := seThreadsCount.Value + 1 to seThreadsCount.MaxValue do
+  begin
+    AFileName := 'Thread' + IntToStr(I) + '.txt';
+    if FileExists(AFileName) then
+      DeleteFile(AFileName);
+  end;
+
   //
   mmResults.Visible := chbStoreResultToMemo.Checked;
   if mmResults.Visible then
