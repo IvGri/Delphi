@@ -114,7 +114,6 @@ begin
     if FileExists(AFileName) then
       DeleteFile(AFileName);
   end;
-
   //
   mmResults.Visible := chbStoreResultToMemo.Checked;
   if mmResults.Visible then
