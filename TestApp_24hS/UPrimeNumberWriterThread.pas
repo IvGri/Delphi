@@ -44,20 +44,24 @@ end;
 procedure TPrimeNumberWriterThread.Execute;
 begin
   OpenResultFile;
-  while not Terminated do
-    if fmMain.CriticalSection.TryEnter and CanContinue then
-    begin
-      FNewNumber := GetNextPrimeNumber(FPrimeNumberRef^);
-      if (FNewNumber <> -1) and (FNewNumber < FMaxNumber) then
-      begin
-        FPrimeNumberRef^ := FNewNumber;
-        Synchronize(SaveNewNumber);
-      end
-      else
-        Terminate;
-      fmMain.CriticalSection.Leave;
-    end;
-  CloseResultFile;
+  try
+    while not Terminated do
+      if fmMain.CriticalSection.TryEnter and CanContinue then
+      try
+        FNewNumber := GetNextPrimeNumber(FPrimeNumberRef^);
+        if (FNewNumber <> -1) and (FNewNumber < FMaxNumber) then
+        begin
+          FPrimeNumberRef^ := FNewNumber;
+          Synchronize(SaveNewNumber);
+        end
+        else
+          Terminate;
+      finally
+        fmMain.CriticalSection.Leave;
+      end;
+  finally
+    CloseResultFile;
+  end;
 end;
 
 function TPrimeNumberWriterThread.CanContinue: Boolean;
