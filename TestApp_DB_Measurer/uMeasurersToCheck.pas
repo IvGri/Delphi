@@ -3,40 +3,57 @@ unit uMeasurersToCheck;
 interface
 
 uses
-  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms, Dialogs, Menus, StdCtrls,
-  cxGraphics, cxControls, dxForms, cxLookAndFeels, cxLookAndFeelPainters, dxLayoutcxEditAdapters, dxLayoutControlAdapters,
-  cxButtons, dxLayoutContainer, cxContainer, cxEdit, cxCustomListBox, cxListBox, cxClasses, dxLayoutControl;
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms, Dialogs, Menus, StdCtrls, DB,
+  dxForms, cxGraphics, cxControls, cxLookAndFeels, cxLookAndFeelPainters, cxStyles, cxCustomData, cxFilter, cxData,
+  cxDataStorage, cxEdit, cxNavigator, dxDateRanges, dxScrollbarAnnotations, cxDBData, cxGridLevel, cxClasses,
+  cxGridCustomView, cxGridCustomTableView, cxGridTableView, cxGridDBTableView, cxGrid;
 
 type
   TfmMeasurersToCheck = class(TdxForm)
-    lcMainGroup_Root: TdxLayoutGroup;
-    lcMain: TdxLayoutControl;
-    lbMeasurersToCheck: TcxListBox;
-    lilbMeasurersToCheck: TdxLayoutItem;
-    btnCopyToClipboard: TcxButton;
-    libtnCopyToClipboard: TdxLayoutItem;
-  private
-    { Private declarations }
-  public
-    { Public declarations }
+    grMainDBTableView: TcxGridDBTableView;
+    grMainLevel: TcxGridLevel;
+    grMain: TcxGrid;
   end;
 
-procedure ShowMeasurersToCheck(AListOfMeasurersToCheck: TStringList);
+procedure ShowMeasurersToCheck(const AStreet: string; const AHouse: Integer);
 
 implementation
 
 {$R *.dfm}
 
-procedure ShowMeasurersToCheck(AListOfMeasurersToCheck: TStringList);
+uses
+  uDataModule;
+
+procedure ShowMeasurersToCheck(const AStreet: string; const AHouse: Integer);
+const
+  CCaptionPattern = 'Measurers, that need check at "%s, %d"';
+  CSQLPattern = 'SELECT L.ID FROM Locations AS L, Checks as C WHERE C.NextCheck <= NOW() AND L.Street = ''%s'' AND L.House = %d';
 var
   AForm: TfmMeasurersToCheck;
 begin
-  AForm := TfmMeasurersToCheck.Create(nil);
+  dmMain.ADOqMeasurersToCheck.SQL.Clear;
+  dmMain.ADOqMeasurersToCheck.SQL.Add(Format(CSQLPattern, [AStreet, AHouse]));
   try
-    // Initialization
-    AForm.ShowModal;
+    dmMain.ADOqMeasurersToCheck.Active := True;
+    if dmMain.ADOqMeasurersToCheck.RecordCount > 0 then
+    begin
+      AForm := TfmMeasurersToCheck.Create(Application.MainForm);
+      try
+        AForm.Caption := Format(CCaptionPattern, [AStreet, AHouse]);
+
+        AForm.grMainDBTableView.DataController.DataSource := dmMain.dsMeasurersToCheck;
+        AForm.grMainDBTableView.DataController.KeyFieldNames := 'ID';
+        AForm.grMainDBTableView.CreateColumn.DataBinding.FieldName := 'ID';
+
+        AForm.ShowModal;
+      finally
+        AForm.Free;
+      end;
+    end
+    else
+      ShowMessage('There is no measurers to check');
   finally
-    AForm.Free;
+    dmMain.ADOqMeasurersToCheck.Active := False;
   end;
 end;
 
