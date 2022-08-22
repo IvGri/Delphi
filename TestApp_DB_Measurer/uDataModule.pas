@@ -8,12 +8,8 @@ uses
 type
   TdmMain = class(TDataModule)
     ADOConnection: TADOConnection;
-    ADODataSetPlace: TADODataSet;
-    ADODataSetMeasurer: TADODataSet;
-    ADODataSetMeasurerData: TADODataSet;
-    DataSourcePlace: TDataSource;
-    DataSourceMeasurer: TDataSource;
-    DataSourceMeasurerData: TDataSource;
+    ADOdsLocationsWithReadings: TADODataSet;
+    dsLocationsWithReadings: TDataSource;
   private
     { Private declarations }
   public
