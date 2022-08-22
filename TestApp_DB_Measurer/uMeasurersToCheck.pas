@@ -33,7 +33,8 @@ var
 begin
   AForm := TfmMeasurersToCheck.Create(nil);
   try
-
+    // Initialization
+    AForm.ShowModal;
   finally
     AForm.Free;
   end;
