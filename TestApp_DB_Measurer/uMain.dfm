@@ -126,6 +126,7 @@ object fmMain: TfmMain
       object cxGridMainDBTableViewMeasurerDatafValueDate: TcxGridDBColumn
         Caption = #1044#1072#1090#1072' '#1089#1085#1103#1090#1080#1103' '#1087#1086#1082#1072#1079#1072#1085#1080#1081
         DataBinding.FieldName = 'fValueDate'
+        Visible = False
       end
     end
     object cxGridMainLevel1: TcxGridLevel
