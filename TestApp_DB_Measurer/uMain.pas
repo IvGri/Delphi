@@ -17,7 +17,7 @@ type
     rMain: TdxRibbon;
     bMainActions: TdxBar;
     blbShowMeasurersToCheck: TdxBarLargeButton;
-    blbUpdateMeasurerValue: TdxBarLargeButton;
+    blbUpdateReading: TdxBarLargeButton;
     cxGridMainDBTableViewLR: TcxGridDBTableView;
     cxGridMainDBTableViewLRID: TcxGridDBColumn;
     cxGridMainDBTableViewLRStreet: TcxGridDBColumn;
@@ -25,14 +25,17 @@ type
     cxGridMainDBTableViewLRRoom: TcxGridDBColumn;
     cxGridMainDBTableViewLRReading: TcxGridDBColumn;
     rtSettings: TdxRibbonTab;
-    bmMainBar1: TdxBar;
-    dxBarLargeButton1: TdxBarLargeButton;
-    dxBarLargeButton2: TdxBarLargeButton;
+    bGridViewSettings: TdxBar;
+    blbShowGroupByBox: TdxBarLargeButton;
+    blbShowNewItemRow: TdxBarLargeButton;
     procedure FormShow(Sender: TObject);
+    procedure FormHide(Sender: TObject);
     procedure blbShowMeasurersToCheckClick(Sender: TObject);
-    procedure cxGridMainDBTableViewRoomsFocusedRecordChanged(Sender: TcxCustomGridTableView; APrevFocusedRecord,
+    procedure blbUpdateReadingClick(Sender: TObject);
+    procedure cxGridMainDBTableViewLRFocusedRecordChanged(Sender: TcxCustomGridTableView; APrevFocusedRecord,
       AFocusedRecord: TcxCustomGridRecord; ANewItemRecordFocusingChanged: Boolean);
-    procedure blbUpdateMeasurerValueClick(Sender: TObject);
+    procedure blbShowGroupByBoxClick(Sender: TObject);
+    procedure blbShowNewItemRowClick(Sender: TObject);
   strict private
     FMeasurerUpdatingValue: Integer;
     //
@@ -56,12 +59,25 @@ begin
   CanClose := StrToInt(Values[0]) > FMeasurerUpdatingValue;
 end;
 
+{ Events }
+
+procedure TfmMain.FormShow(Sender: TObject);
+begin
+  dmMain.ADOConnection.Connected := True;
+  dmMain.ADOdsLocationsWithReadings.Active := True;
+end;
+
+procedure TfmMain.FormHide(Sender: TObject);
+begin
+  dmMain.ADOConnection.Connected := False;
+end;
+
 procedure TfmMain.blbShowMeasurersToCheckClick(Sender: TObject);
 begin
   ShowMeasurersToCheck(nil); // TODO: change nil to the correct value
 end;
 
-procedure TfmMain.blbUpdateMeasurerValueClick(Sender: TObject);
+procedure TfmMain.blbUpdateReadingClick(Sender: TObject);
 var
   AValues: array of string;
 begin
@@ -79,19 +95,21 @@ begin
   end;
 end;
 
-procedure TfmMain.cxGridMainDBTableViewRoomsFocusedRecordChanged(Sender: TcxCustomGridTableView; APrevFocusedRecord,
+procedure TfmMain.cxGridMainDBTableViewLRFocusedRecordChanged(Sender: TcxCustomGridTableView; APrevFocusedRecord,
   AFocusedRecord: TcxCustomGridRecord; ANewItemRecordFocusingChanged: Boolean);
 begin
   blbShowMeasurersToCheck.Enabled := AFocusedRecord <> nil;
-  blbUpdateMeasurerValue.Enabled := AFocusedRecord <> nil;
+  blbUpdateReading.Enabled := AFocusedRecord <> nil;
 end;
 
-procedure TfmMain.FormShow(Sender: TObject);
+procedure TfmMain.blbShowGroupByBoxClick(Sender: TObject);
 begin
-  dmMain.ADOConnection.Connected := True;
-  dmMain.ADODataSetPlace.Active := True;
-  dmMain.ADODataSetMeasurer.Active := True;
-  dmMain.ADODataSetMeasurerData.Active := True;
+  cxGridMainDBTableViewLR.OptionsView.GroupByBox := blbShowGroupByBox.Down;
+end;
+
+procedure TfmMain.blbShowNewItemRowClick(Sender: TObject);
+begin
+  cxGridMainDBTableViewLR.OptionsView.NewItemRow := blbShowNewItemRow.Down;
 end;
 
 end.

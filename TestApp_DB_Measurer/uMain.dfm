@@ -11,6 +11,7 @@ object fmMain: TfmMain
   Font.Name = 'Tahoma'
   Font.Style = []
   OldCreateOrder = False
+  OnHide = FormHide
   OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
@@ -41,6 +42,7 @@ object fmMain: TfmMain
       Navigator.Buttons.Filter.Visible = True
       Navigator.Visible = True
       ScrollbarAnnotations.CustomAnnotations = <>
+      OnFocusedRecordChanged = cxGridMainDBTableViewLRFocusedRecordChanged
       DataController.DataSource = dmMain.dsLocationsWithReadings
       DataController.KeyFieldNames = 'ID'
       DataController.Summary.DefaultGroupSummaryItems = <>
@@ -101,7 +103,7 @@ object fmMain: TfmMain
       Caption = 'Settings'
       Groups = <
         item
-          ToolbarName = 'bmMainBar1'
+          ToolbarName = 'bGridViewSettings'
         end>
       Index = 1
     end
@@ -120,8 +122,8 @@ object fmMain: TfmMain
       True)
     PopupMenuLinks = <>
     UseSystemFont = True
-    Left = 32
-    Top = 48
+    Left = 304
+    Top = 8
     PixelsPerInch = 96
     object bMainActions: TdxBar
       Caption = 'Actions for selected location'
@@ -139,7 +141,7 @@ object fmMain: TfmMain
         end
         item
           Visible = True
-          ItemName = 'blbUpdateMeasurerValue'
+          ItemName = 'blbUpdateReading'
         end>
       OneOnRow = True
       Row = 0
@@ -147,8 +149,8 @@ object fmMain: TfmMain
       Visible = True
       WholeRow = False
     end
-    object bmMainBar1: TdxBar
-      Caption = 'Custom 1'
+    object bGridViewSettings: TdxBar
+      Caption = 'Grid settings'
       CaptionButtons = <>
       DockedLeft = 0
       DockedTop = 0
@@ -159,11 +161,11 @@ object fmMain: TfmMain
       ItemLinks = <
         item
           Visible = True
-          ItemName = 'dxBarLargeButton1'
+          ItemName = 'blbShowGroupByBox'
         end
         item
           Visible = True
-          ItemName = 'dxBarLargeButton2'
+          ItemName = 'blbShowNewItemRow'
         end>
       OneOnRow = True
       Row = 0
@@ -179,25 +181,29 @@ object fmMain: TfmMain
       Visible = ivAlways
       OnClick = blbShowMeasurersToCheckClick
     end
-    object blbUpdateMeasurerValue: TdxBarLargeButton
+    object blbUpdateReading: TdxBarLargeButton
       Caption = 'Update reading'
       Category = 0
       Enabled = False
       Hint = 'Update reading'
       Visible = ivAlways
-      OnClick = blbUpdateMeasurerValueClick
+      OnClick = blbUpdateReadingClick
     end
-    object dxBarLargeButton1: TdxBarLargeButton
-      Caption = 'group by box'
+    object blbShowGroupByBox: TdxBarLargeButton
+      Caption = 'Show Group Box'
       Category = 0
-      Hint = 'group by box'
+      Hint = 'Show Group Box'
       Visible = ivAlways
+      ButtonStyle = bsChecked
+      OnClick = blbShowGroupByBoxClick
     end
-    object dxBarLargeButton2: TdxBarLargeButton
-      Caption = 'new item row'
+    object blbShowNewItemRow: TdxBarLargeButton
+      Caption = 'Show New Item Row'
       Category = 0
-      Hint = 'new item row'
+      Hint = 'Show New Item Row'
       Visible = ivAlways
+      ButtonStyle = bsChecked
+      OnClick = blbShowNewItemRowClick
     end
   end
 end

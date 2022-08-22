@@ -1,7 +1,7 @@
 object dmMain: TdmMain
   OldCreateOrder = False
   Height = 165
-  Width = 373
+  Width = 165
   object ADOConnection: TADOConnection
     ConnectionString = 'Provider=Microsoft.Jet.OLEDB.4.0;Data Source=MeasurersDB.mdb;'
     LoginPrompt = False
