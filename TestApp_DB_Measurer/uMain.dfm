@@ -56,33 +56,27 @@ object fmMain: TfmMain
       OptionsView.HeaderFilterButtonShowMode = fbmSmartTag
       OptionsView.Indicator = True
       OptionsView.ShowColumnFilterButtons = sfbWhenSelected
-      object cxGridMainDBTableViewRoomsfStreet1: TcxGridDBColumn
-        Caption = 'Street'
+      object cxGridMainDBTableViewRoomsfStreet: TcxGridDBColumn
+        Caption = #1059#1083#1080#1094#1072
         DataBinding.FieldName = 'fStreet'
         SortIndex = 0
         SortOrder = soAscending
         Width = 246
       end
-      object cxGridMainDBTableViewRoomsfHome1: TcxGridDBColumn
-        Caption = 'Home'
+      object cxGridMainDBTableViewRoomsfHome: TcxGridDBColumn
+        Caption = #1044#1086#1084
         DataBinding.FieldName = 'fHome'
-        FooterAlignmentHorz = taRightJustify
-        GroupSummaryAlignment = taRightJustify
         Width = 69
       end
-      object cxGridMainDBTableViewRoomsfRoom1: TcxGridDBColumn
-        Caption = 'Room'
+      object cxGridMainDBTableViewRoomsfRoom: TcxGridDBColumn
+        Caption = #1050#1074#1072#1088#1090#1080#1088#1072
         DataBinding.FieldName = 'fRoom'
-        FooterAlignmentHorz = taRightJustify
-        GroupSummaryAlignment = taRightJustify
         Width = 69
       end
-      object cxGridMainDBTableViewRoomsfMeasurerIndex1: TcxGridDBColumn
-        Caption = 'MeasurerIndex'
+      object cxGridMainDBTableViewRoomsfMeasurerIndex: TcxGridDBColumn
+        Caption = #8470' '#1089#1095#1077#1090#1095#1080#1082#1072
         DataBinding.FieldName = 'fMeasurerIndex'
         Visible = False
-        FooterAlignmentHorz = taRightJustify
-        GroupSummaryAlignment = taRightJustify
         Width = 69
       end
     end
@@ -121,20 +115,16 @@ object fmMain: TfmMain
       OptionsView.HeaderFilterButtonShowMode = fbmSmartTag
       OptionsView.ShowColumnFilterButtons = sfbWhenSelected
       object cxGridMainDBTableViewMeasurerDatafMeasurerIndex: TcxGridDBColumn
-        Caption = 'MeasurerIndex'
+        Caption = #8470' '#1089#1095#1077#1090#1095#1080#1082#1072
         DataBinding.FieldName = 'fMeasurerIndex'
         Visible = False
-        FooterAlignmentHorz = taRightJustify
-        GroupSummaryAlignment = taRightJustify
       end
       object cxGridMainDBTableViewMeasurerDatafValue: TcxGridDBColumn
-        Caption = 'Value'
+        Caption = #1055#1086#1082#1072#1079#1072#1085#1080#1103
         DataBinding.FieldName = 'fValue'
-        FooterAlignmentHorz = taRightJustify
-        GroupSummaryAlignment = taRightJustify
       end
       object cxGridMainDBTableViewMeasurerDatafValueDate: TcxGridDBColumn
-        Caption = 'ValueDate'
+        Caption = #1044#1072#1090#1072' '#1089#1085#1103#1090#1080#1103' '#1087#1086#1082#1072#1079#1072#1085#1080#1081
         DataBinding.FieldName = 'fValueDate'
       end
     end

@@ -13,10 +13,10 @@ type
     cxGridMainDBTableViewRooms: TcxGridDBTableView;
     cxGridMainLevel1: TcxGridLevel;
     cxGridMain: TcxGrid;
-    cxGridMainDBTableViewRoomsfStreet1: TcxGridDBColumn;
-    cxGridMainDBTableViewRoomsfHome1: TcxGridDBColumn;
-    cxGridMainDBTableViewRoomsfRoom1: TcxGridDBColumn;
-    cxGridMainDBTableViewRoomsfMeasurerIndex1: TcxGridDBColumn;
+    cxGridMainDBTableViewRoomsfStreet: TcxGridDBColumn;
+    cxGridMainDBTableViewRoomsfHome: TcxGridDBColumn;
+    cxGridMainDBTableViewRoomsfRoom: TcxGridDBColumn;
+    cxGridMainDBTableViewRoomsfMeasurerIndex: TcxGridDBColumn;
     cxGridMainLevel2: TcxGridLevel;
     cxGridMainDBTableViewMeasurerData: TcxGridDBTableView;
     cxGridMainDBTableViewMeasurerDatafMeasurerIndex: TcxGridDBColumn;
