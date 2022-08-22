@@ -22,7 +22,6 @@ object fmMain: TfmMain
     Height = 258
     Align = alClient
     TabOrder = 0
-    ExplicitWidth = 522
     object cxGridMainDBTableViewLR: TcxGridDBTableView
       Navigator.Buttons.CustomButtons = <>
       Navigator.Buttons.First.Visible = True
@@ -57,7 +56,7 @@ object fmMain: TfmMain
       OptionsView.GroupByBox = False
       OptionsView.HeaderFilterButtonShowMode = fbmSmartTag
       OptionsView.Indicator = True
-      OptionsView.ShowColumnFilterButtons = sfbWhenSelected
+      OptionsView.ShowColumnFilterButtons = sfbAlways
       object cxGridMainDBTableViewLRID: TcxGridDBColumn
         DataBinding.FieldName = 'ID'
         Visible = False
@@ -91,7 +90,6 @@ object fmMain: TfmMain
     Contexts = <>
     TabOrder = 1
     TabStop = False
-    ExplicitWidth = 522
     object rtActions: TdxRibbonTab
       Active = True
       Caption = 'Actions'
