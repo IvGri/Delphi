@@ -1,9 +1,9 @@
 object fmMain: TfmMain
   Left = 0
   Top = 0
-  Caption = #1059#1095#1077#1090' '#1089#1095#1077#1090#1095#1080#1082#1086#1074
+  Caption = 'Measurers App'
   ClientHeight = 384
-  ClientWidth = 748
+  ClientWidth = 522
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -17,13 +17,11 @@ object fmMain: TfmMain
   object cxGridMain: TcxGrid
     Left = 0
     Top = 126
-    Width = 748
+    Width = 522
     Height = 258
     Align = alClient
     TabOrder = 0
-    ExplicitTop = 0
-    ExplicitHeight = 384
-    object cxGridMainDBTableViewRooms: TcxGridDBTableView
+    object cxGridMainDBTableViewLR: TcxGridDBTableView
       Navigator.Buttons.CustomButtons = <>
       Navigator.Buttons.First.Visible = True
       Navigator.Buttons.PriorPage.Visible = False
@@ -43,107 +41,47 @@ object fmMain: TfmMain
       Navigator.Buttons.Filter.Visible = True
       Navigator.Visible = True
       ScrollbarAnnotations.CustomAnnotations = <>
-      OnFocusedRecordChanged = cxGridMainDBTableViewRoomsFocusedRecordChanged
-      DataController.DataSource = dmMain.DataSourcePlace
-      DataController.KeyFieldNames = 'fMeasurerIndex'
+      DataController.DataSource = dmMain.dsLocationsWithReadings
+      DataController.KeyFieldNames = 'ID'
       DataController.Summary.DefaultGroupSummaryItems = <>
       DataController.Summary.FooterSummaryItems = <>
       DataController.Summary.SummaryGroups = <>
       OptionsBehavior.IncSearch = True
       OptionsCustomize.DataRowSizing = True
-      OptionsCustomize.GroupRowSizing = True
+      OptionsData.Appending = True
       OptionsData.Editing = False
       OptionsView.CellAutoHeight = True
-      OptionsView.ColumnAutoWidth = True
       OptionsView.GroupByBox = False
       OptionsView.HeaderFilterButtonShowMode = fbmSmartTag
       OptionsView.Indicator = True
       OptionsView.ShowColumnFilterButtons = sfbWhenSelected
-      object cxGridMainDBTableViewRoomsfStreet: TcxGridDBColumn
-        Caption = #1059#1083#1080#1094#1072
-        DataBinding.FieldName = 'fStreet'
-        SortIndex = 0
-        SortOrder = soAscending
-        Width = 246
-      end
-      object cxGridMainDBTableViewRoomsfHome: TcxGridDBColumn
-        Caption = #1044#1086#1084
-        DataBinding.FieldName = 'fHome'
-        Width = 69
-      end
-      object cxGridMainDBTableViewRoomsfRoom: TcxGridDBColumn
-        Caption = #1050#1074#1072#1088#1090#1080#1088#1072
-        DataBinding.FieldName = 'fRoom'
-        Width = 69
-      end
-      object cxGridMainDBTableViewRoomsfMeasurerIndex: TcxGridDBColumn
-        Caption = #8470' '#1089#1095#1077#1090#1095#1080#1082#1072
-        DataBinding.FieldName = 'fMeasurerIndex'
+      object cxGridMainDBTableViewLRID: TcxGridDBColumn
+        DataBinding.FieldName = 'ID'
         Visible = False
-        Width = 69
+      end
+      object cxGridMainDBTableViewLRStreet: TcxGridDBColumn
+        DataBinding.FieldName = 'Street'
+      end
+      object cxGridMainDBTableViewLRHouse: TcxGridDBColumn
+        DataBinding.FieldName = 'House'
+        Width = 54
+      end
+      object cxGridMainDBTableViewLRRoom: TcxGridDBColumn
+        DataBinding.FieldName = 'Room'
+        Width = 49
+      end
+      object cxGridMainDBTableViewLRReading: TcxGridDBColumn
+        DataBinding.FieldName = 'Reading'
       end
     end
-    object cxGridMainDBTableViewMeasurerData: TcxGridDBTableView
-      Navigator.Buttons.CustomButtons = <>
-      Navigator.Buttons.First.Visible = True
-      Navigator.Buttons.PriorPage.Visible = True
-      Navigator.Buttons.Prior.Visible = True
-      Navigator.Buttons.Next.Visible = True
-      Navigator.Buttons.NextPage.Visible = True
-      Navigator.Buttons.Last.Visible = True
-      Navigator.Buttons.Insert.Visible = True
-      Navigator.Buttons.Append.Visible = False
-      Navigator.Buttons.Delete.Visible = True
-      Navigator.Buttons.Edit.Visible = True
-      Navigator.Buttons.Post.Visible = True
-      Navigator.Buttons.Cancel.Visible = True
-      Navigator.Buttons.Refresh.Visible = True
-      Navigator.Buttons.SaveBookmark.Visible = True
-      Navigator.Buttons.GotoBookmark.Visible = True
-      Navigator.Buttons.Filter.Visible = True
-      FilterBox.Visible = fvNever
-      ScrollbarAnnotations.CustomAnnotations = <>
-      DataController.DataSource = dmMain.DataSourceMeasurerData
-      DataController.DetailKeyFieldNames = 'fMeasurerIndex'
-      DataController.KeyFieldNames = 'fMeasurerIndex'
-      DataController.MasterKeyFieldNames = 'fMeasurerIndex'
-      DataController.Summary.DefaultGroupSummaryItems = <>
-      DataController.Summary.FooterSummaryItems = <>
-      DataController.Summary.SummaryGroups = <>
-      OptionsCustomize.ColumnFiltering = False
-      OptionsCustomize.ColumnSorting = False
-      OptionsData.Editing = False
-      OptionsView.CellAutoHeight = True
-      OptionsView.ColumnAutoWidth = True
-      OptionsView.GroupByBox = False
-      OptionsView.HeaderFilterButtonShowMode = fbmSmartTag
-      OptionsView.ShowColumnFilterButtons = sfbWhenSelected
-      object cxGridMainDBTableViewMeasurerDatafMeasurerIndex: TcxGridDBColumn
-        Caption = #8470' '#1089#1095#1077#1090#1095#1080#1082#1072
-        DataBinding.FieldName = 'fMeasurerIndex'
-        Visible = False
-      end
-      object cxGridMainDBTableViewMeasurerDatafValue: TcxGridDBColumn
-        Caption = #1055#1086#1082#1072#1079#1072#1085#1080#1103
-        DataBinding.FieldName = 'fValue'
-      end
-      object cxGridMainDBTableViewMeasurerDatafValueDate: TcxGridDBColumn
-        Caption = #1044#1072#1090#1072' '#1089#1085#1103#1090#1080#1103' '#1087#1086#1082#1072#1079#1072#1085#1080#1081
-        DataBinding.FieldName = 'fValueDate'
-        Visible = False
-      end
-    end
-    object cxGridMainLevelRooms: TcxGridLevel
-      GridView = cxGridMainDBTableViewRooms
-      object cxGridMainLevelMeasurerData: TcxGridLevel
-        GridView = cxGridMainDBTableViewMeasurerData
-      end
+    object cxGridMainLevelLR: TcxGridLevel
+      GridView = cxGridMainDBTableViewLR
     end
   end
   object rMain: TdxRibbon
     Left = 0
     Top = 0
-    Width = 748
+    Width = 522
     Height = 126
     BarManager = bmMain
     ColorSchemeName = 'Blue'
@@ -152,12 +90,20 @@ object fmMain: TfmMain
     TabStop = False
     object rtActions: TdxRibbonTab
       Active = True
-      Caption = #1044#1077#1081#1089#1090#1074#1080#1103
+      Caption = 'Actions'
       Groups = <
         item
           ToolbarName = 'bMainActions'
         end>
       Index = 0
+    end
+    object rtSettings: TdxRibbonTab
+      Caption = 'Settings'
+      Groups = <
+        item
+          ToolbarName = 'bmMainBar1'
+        end>
+      Index = 1
     end
   end
   object bmMain: TdxBarManager
@@ -178,7 +124,7 @@ object fmMain: TfmMain
     Top = 48
     PixelsPerInch = 96
     object bMainActions: TdxBar
-      Caption = #1044#1077#1081#1089#1090#1074#1080#1103' '#1076#1083#1103' '#1074#1099#1073#1088#1072#1085#1085#1086#1075#1086' '#1076#1086#1084#1072'/'#1082#1074#1072#1088#1090#1080#1088#1099
+      Caption = 'Actions for selected location'
       CaptionButtons = <>
       DockedLeft = 0
       DockedTop = 0
@@ -201,21 +147,57 @@ object fmMain: TfmMain
       Visible = True
       WholeRow = False
     end
+    object bmMainBar1: TdxBar
+      Caption = 'Custom 1'
+      CaptionButtons = <>
+      DockedLeft = 0
+      DockedTop = 0
+      FloatLeft = 550
+      FloatTop = 2
+      FloatClientWidth = 0
+      FloatClientHeight = 0
+      ItemLinks = <
+        item
+          Visible = True
+          ItemName = 'dxBarLargeButton1'
+        end
+        item
+          Visible = True
+          ItemName = 'dxBarLargeButton2'
+        end>
+      OneOnRow = True
+      Row = 0
+      UseOwnFont = False
+      Visible = True
+      WholeRow = False
+    end
     object blbShowMeasurersToCheck: TdxBarLargeButton
-      Caption = #1055#1086#1082#1072#1079#1072#1090#1100' '#1089#1095#1077#1090#1095#1080#1082#1080', '#1082#1086#1090#1086#1088#1099#1084' '#1090#1088#1077#1073#1091#1077#1090#1089#1103' '#1087#1086#1074#1077#1088#1082#1072
+      Caption = 'Show measurers, that need check'
       Category = 0
       Enabled = False
-      Hint = #1055#1086#1082#1072#1079#1072#1090#1100' '#1089#1095#1077#1090#1095#1080#1082#1080', '#1082#1086#1090#1086#1088#1099#1084' '#1090#1088#1077#1073#1091#1077#1090#1089#1103' '#1087#1086#1074#1077#1088#1082#1072
+      Hint = 'Show measurers, that need check'
       Visible = ivAlways
       OnClick = blbShowMeasurersToCheckClick
     end
     object blbUpdateMeasurerValue: TdxBarLargeButton
-      Caption = #1042#1074#1077#1089#1090#1080' '#1087#1086#1082#1072#1079#1072#1085#1080#1103' '#1089#1095#1077#1090#1095#1080#1082#1072
+      Caption = 'Update reading'
       Category = 0
       Enabled = False
-      Hint = #1042#1074#1077#1089#1090#1080' '#1087#1086#1082#1072#1079#1072#1085#1080#1103' '#1089#1095#1077#1090#1095#1080#1082#1072
+      Hint = 'Update reading'
       Visible = ivAlways
       OnClick = blbUpdateMeasurerValueClick
+    end
+    object dxBarLargeButton1: TdxBarLargeButton
+      Caption = 'group by box'
+      Category = 0
+      Hint = 'group by box'
+      Visible = ivAlways
+    end
+    object dxBarLargeButton2: TdxBarLargeButton
+      Caption = 'new item row'
+      Category = 0
+      Hint = 'new item row'
+      Visible = ivAlways
     end
   end
 end

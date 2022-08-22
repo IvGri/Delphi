@@ -10,24 +10,24 @@ uses
 
 type
   TfmMain = class(TdxRibbonForm)
-    cxGridMainDBTableViewRooms: TcxGridDBTableView;
-    cxGridMainLevelRooms: TcxGridLevel;
+    cxGridMainLevelLR: TcxGridLevel;
     cxGridMain: TcxGrid;
-    cxGridMainDBTableViewRoomsfStreet: TcxGridDBColumn;
-    cxGridMainDBTableViewRoomsfHome: TcxGridDBColumn;
-    cxGridMainDBTableViewRoomsfRoom: TcxGridDBColumn;
-    cxGridMainDBTableViewRoomsfMeasurerIndex: TcxGridDBColumn;
-    cxGridMainLevelMeasurerData: TcxGridLevel;
-    cxGridMainDBTableViewMeasurerData: TcxGridDBTableView;
-    cxGridMainDBTableViewMeasurerDatafMeasurerIndex: TcxGridDBColumn;
-    cxGridMainDBTableViewMeasurerDatafValue: TcxGridDBColumn;
-    cxGridMainDBTableViewMeasurerDatafValueDate: TcxGridDBColumn;
     bmMain: TdxBarManager;
     rtActions: TdxRibbonTab;
     rMain: TdxRibbon;
     bMainActions: TdxBar;
     blbShowMeasurersToCheck: TdxBarLargeButton;
     blbUpdateMeasurerValue: TdxBarLargeButton;
+    cxGridMainDBTableViewLR: TcxGridDBTableView;
+    cxGridMainDBTableViewLRID: TcxGridDBColumn;
+    cxGridMainDBTableViewLRStreet: TcxGridDBColumn;
+    cxGridMainDBTableViewLRHouse: TcxGridDBColumn;
+    cxGridMainDBTableViewLRRoom: TcxGridDBColumn;
+    cxGridMainDBTableViewLRReading: TcxGridDBColumn;
+    rtSettings: TdxRibbonTab;
+    bmMainBar1: TdxBar;
+    dxBarLargeButton1: TdxBarLargeButton;
+    dxBarLargeButton2: TdxBarLargeButton;
     procedure FormShow(Sender: TObject);
     procedure blbShowMeasurersToCheckClick(Sender: TObject);
     procedure cxGridMainDBTableViewRoomsFocusedRecordChanged(Sender: TcxCustomGridTableView; APrevFocusedRecord,
