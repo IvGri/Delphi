@@ -4,26 +4,26 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms, Dialogs, cxGraphics, cxControls, DB,
-  cxLookAndFeels, cxLookAndFeelPainters, cxStyles, cxCustomData, cxFilter, cxData, cxDataStorage, cxEdit, cxNavigator,
-  dxDateRanges, dxScrollbarAnnotations, cxDBData, cxGridCustomTableView, cxGridTableView, cxGridDBTableView,
-  cxGridLevel, cxClasses, cxGridCustomView, cxGrid, dxCore, dxRibbonSkins, dxRibbon, dxBar, dxRibbonForm;
+  dxRibbonForm, cxLookAndFeels, cxLookAndFeelPainters, cxStyles, cxCustomData, cxFilter, cxData, cxDataStorage, cxEdit,
+  cxNavigator, dxDateRanges, dxScrollbarAnnotations, cxDBData, cxGridCustomTableView, cxGridTableView, cxGridDBTableView,
+  cxGridLevel, cxClasses, cxGridCustomView, cxGrid, dxCore, dxRibbonSkins, dxRibbon, dxBar;
 
 type
   TfmMain = class(TdxRibbonForm)
-    cxGridMainLevelLR: TcxGridLevel;
-    cxGridMain: TcxGrid;
+    grMainLevelLR: TcxGridLevel;
+    grMain: TcxGrid;
     bmMain: TdxBarManager;
     rtActions: TdxRibbonTab;
     rMain: TdxRibbon;
     bMainActions: TdxBar;
     blbShowMeasurersToCheck: TdxBarLargeButton;
     blbUpdateReading: TdxBarLargeButton;
-    cxGridMainDBTableViewLR: TcxGridDBTableView;
-    cxGridMainDBTableViewLRID: TcxGridDBColumn;
-    cxGridMainDBTableViewLRStreet: TcxGridDBColumn;
-    cxGridMainDBTableViewLRHouse: TcxGridDBColumn;
-    cxGridMainDBTableViewLRRoom: TcxGridDBColumn;
-    cxGridMainDBTableViewLRReading: TcxGridDBColumn;
+    grMainDBTableViewLR: TcxGridDBTableView;
+    grMainDBTableViewLRID: TcxGridDBColumn;
+    grMainDBTableViewLRStreet: TcxGridDBColumn;
+    grMainDBTableViewLRHouse: TcxGridDBColumn;
+    grMainDBTableViewLRRoom: TcxGridDBColumn;
+    grMainDBTableViewLRReading: TcxGridDBColumn;
     rtSettings: TdxRibbonTab;
     bGridViewSettings: TdxBar;
     blbShowGroupByBox: TdxBarLargeButton;
@@ -32,7 +32,7 @@ type
     procedure FormHide(Sender: TObject);
     procedure blbShowMeasurersToCheckClick(Sender: TObject);
     procedure blbUpdateReadingClick(Sender: TObject);
-    procedure cxGridMainDBTableViewLRFocusedRecordChanged(Sender: TcxCustomGridTableView; APrevFocusedRecord,
+    procedure grMainDBTableViewLRFocusedRecordChanged(Sender: TcxCustomGridTableView; APrevFocusedRecord,
       AFocusedRecord: TcxCustomGridRecord; ANewItemRecordFocusingChanged: Boolean);
     procedure blbShowGroupByBoxClick(Sender: TObject);
     procedure blbShowNewItemRowClick(Sender: TObject);
@@ -74,7 +74,9 @@ end;
 
 procedure TfmMain.blbShowMeasurersToCheckClick(Sender: TObject);
 begin
-  ShowMeasurersToCheck(nil); // TODO: change nil to the correct value
+  ShowMeasurersToCheck(
+    VarToStr(grMainDBTableViewLR.Controller.FocusedRow.Values[grMainDBTableViewLRStreet.Index]),
+    grMainDBTableViewLR.Controller.FocusedRow.Values[grMainDBTableViewLRHouse.Index]);
 end;
 
 procedure TfmMain.blbUpdateReadingClick(Sender: TObject);
@@ -95,7 +97,7 @@ begin
   end;
 end;
 
-procedure TfmMain.cxGridMainDBTableViewLRFocusedRecordChanged(Sender: TcxCustomGridTableView; APrevFocusedRecord,
+procedure TfmMain.grMainDBTableViewLRFocusedRecordChanged(Sender: TcxCustomGridTableView; APrevFocusedRecord,
   AFocusedRecord: TcxCustomGridRecord; ANewItemRecordFocusingChanged: Boolean);
 begin
   blbShowMeasurersToCheck.Enabled := AFocusedRecord <> nil;
@@ -104,12 +106,12 @@ end;
 
 procedure TfmMain.blbShowGroupByBoxClick(Sender: TObject);
 begin
-  cxGridMainDBTableViewLR.OptionsView.GroupByBox := blbShowGroupByBox.Down;
+  grMainDBTableViewLR.OptionsView.GroupByBox := blbShowGroupByBox.Down;
 end;
 
 procedure TfmMain.blbShowNewItemRowClick(Sender: TObject);
 begin
-  cxGridMainDBTableViewLR.OptionsView.NewItemRow := blbShowNewItemRow.Down;
+  grMainDBTableViewLR.OptionsView.NewItemRow := blbShowNewItemRow.Down;
 end;
 
 end.

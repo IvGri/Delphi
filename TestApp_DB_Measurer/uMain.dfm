@@ -15,14 +15,14 @@ object fmMain: TfmMain
   OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
-  object cxGridMain: TcxGrid
+  object grMain: TcxGrid
     Left = 0
     Top = 126
     Width = 550
     Height = 258
     Align = alClient
     TabOrder = 0
-    object cxGridMainDBTableViewLR: TcxGridDBTableView
+    object grMainDBTableViewLR: TcxGridDBTableView
       Navigator.Buttons.CustomButtons = <>
       Navigator.Buttons.First.Visible = True
       Navigator.Buttons.PriorPage.Visible = False
@@ -42,7 +42,7 @@ object fmMain: TfmMain
       Navigator.Buttons.Filter.Visible = True
       Navigator.Visible = True
       ScrollbarAnnotations.CustomAnnotations = <>
-      OnFocusedRecordChanged = cxGridMainDBTableViewLRFocusedRecordChanged
+      OnFocusedRecordChanged = grMainDBTableViewLRFocusedRecordChanged
       DataController.DataSource = dmMain.dsLocationsWithReadings
       DataController.KeyFieldNames = 'ID'
       DataController.Summary.DefaultGroupSummaryItems = <>
@@ -57,27 +57,27 @@ object fmMain: TfmMain
       OptionsView.HeaderFilterButtonShowMode = fbmSmartTag
       OptionsView.Indicator = True
       OptionsView.ShowColumnFilterButtons = sfbAlways
-      object cxGridMainDBTableViewLRID: TcxGridDBColumn
+      object grMainDBTableViewLRID: TcxGridDBColumn
         DataBinding.FieldName = 'ID'
         Visible = False
       end
-      object cxGridMainDBTableViewLRStreet: TcxGridDBColumn
+      object grMainDBTableViewLRStreet: TcxGridDBColumn
         DataBinding.FieldName = 'Street'
       end
-      object cxGridMainDBTableViewLRHouse: TcxGridDBColumn
+      object grMainDBTableViewLRHouse: TcxGridDBColumn
         DataBinding.FieldName = 'House'
         Width = 54
       end
-      object cxGridMainDBTableViewLRRoom: TcxGridDBColumn
+      object grMainDBTableViewLRRoom: TcxGridDBColumn
         DataBinding.FieldName = 'Room'
         Width = 49
       end
-      object cxGridMainDBTableViewLRReading: TcxGridDBColumn
+      object grMainDBTableViewLRReading: TcxGridDBColumn
         DataBinding.FieldName = 'Reading'
       end
     end
-    object cxGridMainLevelLR: TcxGridLevel
-      GridView = cxGridMainDBTableViewLR
+    object grMainLevelLR: TcxGridLevel
+      GridView = grMainDBTableViewLR
     end
   end
   object rMain: TdxRibbon
