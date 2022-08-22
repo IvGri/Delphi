@@ -6,22 +6,27 @@ uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms, Dialogs, cxGraphics, cxControls,
   cxLookAndFeels, cxLookAndFeelPainters, cxStyles, cxCustomData, cxFilter, cxData, cxDataStorage, cxEdit, cxNavigator,
   dxDateRanges, dxScrollbarAnnotations, Data.DB, cxDBData, cxGridCustomTableView, cxGridTableView, cxGridDBTableView,
-  cxGridLevel, cxClasses, cxGridCustomView, cxGrid;
+  cxGridLevel, cxClasses, cxGridCustomView, cxGrid, dxCore, dxRibbonSkins, dxRibbon, dxBar;
 
 type
   TfmMain = class(TForm)
     cxGridMainDBTableViewRooms: TcxGridDBTableView;
-    cxGridMainLevel1: TcxGridLevel;
+    cxGridMainLevelRooms: TcxGridLevel;
     cxGridMain: TcxGrid;
     cxGridMainDBTableViewRoomsfStreet: TcxGridDBColumn;
     cxGridMainDBTableViewRoomsfHome: TcxGridDBColumn;
     cxGridMainDBTableViewRoomsfRoom: TcxGridDBColumn;
     cxGridMainDBTableViewRoomsfMeasurerIndex: TcxGridDBColumn;
-    cxGridMainLevel2: TcxGridLevel;
+    cxGridMainLevelMeasurerData: TcxGridLevel;
     cxGridMainDBTableViewMeasurerData: TcxGridDBTableView;
     cxGridMainDBTableViewMeasurerDatafMeasurerIndex: TcxGridDBColumn;
     cxGridMainDBTableViewMeasurerDatafValue: TcxGridDBColumn;
     cxGridMainDBTableViewMeasurerDatafValueDate: TcxGridDBColumn;
+    bmMain: TdxBarManager;
+    rtActions: TdxRibbonTab;
+    rMain: TdxRibbon;
+    bMainActions: TdxBar;
+    blbShowMeasurersToCheck: TdxBarLargeButton;
     procedure FormShow(Sender: TObject);
   private
     { Private declarations }
