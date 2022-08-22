@@ -10,6 +10,8 @@ type
     ADOConnection: TADOConnection;
     ADOdsLocationsWithReadings: TADODataSet;
     dsLocationsWithReadings: TDataSource;
+    ADOqMeasurersToCheck: TADOQuery;
+    dsMeasurersToCheck: TDataSource;
   end;
 
 var

@@ -1,8 +1,9 @@
 object dmMain: TdmMain
   OldCreateOrder = False
   Height = 165
-  Width = 165
+  Width = 301
   object ADOConnection: TADOConnection
+    Connected = True
     ConnectionString = 'Provider=Microsoft.Jet.OLEDB.4.0;Data Source=MeasurersDB.mdb;'
     LoginPrompt = False
     Mode = cmReadWrite
@@ -11,6 +12,7 @@ object dmMain: TdmMain
     Top = 8
   end
   object ADOdsLocationsWithReadings: TADODataSet
+    Active = True
     Connection = ADOConnection
     CursorType = ctStatic
     CommandText = 
@@ -23,6 +25,16 @@ object dmMain: TdmMain
   object dsLocationsWithReadings: TDataSource
     DataSet = ADOdsLocationsWithReadings
     Left = 64
+    Top = 112
+  end
+  object ADOqMeasurersToCheck: TADOQuery
+    Connection = ADOConnection
+    Parameters = <>
+    Left = 208
+    Top = 64
+  end
+  object dsMeasurersToCheck: TDataSource
+    Left = 208
     Top = 112
   end
 end
