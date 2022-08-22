@@ -28,6 +28,7 @@ type
     bMainActions: TdxBar;
     blbShowMeasurersToCheck: TdxBarLargeButton;
     procedure FormShow(Sender: TObject);
+    procedure blbShowMeasurersToCheckClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -42,7 +43,12 @@ implementation
 {$R *.dfm}
 
 uses
-  uDataModule;
+  uDataModule, uMeasurersToCheck;
+
+procedure TfmMain.blbShowMeasurersToCheckClick(Sender: TObject);
+begin
+  ShowMeasurersToCheck(nil); // TODO: change nil to the correct value
+end;
 
 procedure TfmMain.FormShow(Sender: TObject);
 begin
