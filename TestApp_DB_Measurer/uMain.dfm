@@ -3,7 +3,7 @@ object fmMain: TfmMain
   Top = 0
   Caption = 'Measurers App'
   ClientHeight = 384
-  ClientWidth = 522
+  ClientWidth = 550
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -18,10 +18,11 @@ object fmMain: TfmMain
   object cxGridMain: TcxGrid
     Left = 0
     Top = 126
-    Width = 522
+    Width = 550
     Height = 258
     Align = alClient
     TabOrder = 0
+    ExplicitWidth = 522
     object cxGridMainDBTableViewLR: TcxGridDBTableView
       Navigator.Buttons.CustomButtons = <>
       Navigator.Buttons.First.Visible = True
@@ -83,13 +84,14 @@ object fmMain: TfmMain
   object rMain: TdxRibbon
     Left = 0
     Top = 0
-    Width = 522
+    Width = 550
     Height = 126
     BarManager = bmMain
     ColorSchemeName = 'Blue'
     Contexts = <>
     TabOrder = 1
     TabStop = False
+    ExplicitWidth = 522
     object rtActions: TdxRibbonTab
       Active = True
       Caption = 'Actions'
