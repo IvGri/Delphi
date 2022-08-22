@@ -13,6 +13,7 @@ type
     grMainDBTableView: TcxGridDBTableView;
     grMainLevel: TcxGridLevel;
     grMain: TcxGrid;
+    grMainDBTableViewColumn: TcxGridDBColumn;
   end;
 
 procedure ShowMeasurersToCheck(const AStreet: string; const AHouse: Integer);
@@ -43,7 +44,7 @@ begin
 
         AForm.grMainDBTableView.DataController.DataSource := dmMain.dsMeasurersToCheck;
         AForm.grMainDBTableView.DataController.KeyFieldNames := 'ID';
-        AForm.grMainDBTableView.CreateColumn.DataBinding.FieldName := 'ID';
+        AForm.grMainDBTableViewColumn.DataBinding.FieldName := 'ID';
 
         AForm.ShowModal;
       finally

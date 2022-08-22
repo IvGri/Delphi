@@ -44,6 +44,9 @@ object fmMeasurersToCheck: TfmMeasurersToCheck
       OptionsView.ColumnAutoWidth = True
       OptionsView.GroupByBox = False
       OptionsView.Header = False
+      object grMainDBTableViewColumn: TcxGridDBColumn
+        DataBinding.IsNullValueType = True
+      end
     end
     object grMainLevel: TcxGridLevel
       GridView = grMainDBTableView
