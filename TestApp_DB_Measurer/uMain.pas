@@ -29,6 +29,8 @@ type
     blbShowMeasurersToCheck: TdxBarLargeButton;
     procedure FormShow(Sender: TObject);
     procedure blbShowMeasurersToCheckClick(Sender: TObject);
+    procedure cxGridMainDBTableViewRoomsFocusedRecordChanged(Sender: TcxCustomGridTableView; APrevFocusedRecord,
+      AFocusedRecord: TcxCustomGridRecord; ANewItemRecordFocusingChanged: Boolean);
   private
     { Private declarations }
   public
@@ -48,6 +50,12 @@ uses
 procedure TfmMain.blbShowMeasurersToCheckClick(Sender: TObject);
 begin
   ShowMeasurersToCheck(nil); // TODO: change nil to the correct value
+end;
+
+procedure TfmMain.cxGridMainDBTableViewRoomsFocusedRecordChanged(Sender: TcxCustomGridTableView; APrevFocusedRecord,
+  AFocusedRecord: TcxCustomGridRecord; ANewItemRecordFocusingChanged: Boolean);
+begin
+  blbShowMeasurersToCheck.Enabled := AFocusedRecord <> nil;
 end;
 
 procedure TfmMain.FormShow(Sender: TObject);

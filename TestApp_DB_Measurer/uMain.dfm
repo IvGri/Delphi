@@ -43,6 +43,7 @@ object fmMain: TfmMain
       Navigator.Buttons.Filter.Visible = True
       Navigator.Visible = True
       ScrollbarAnnotations.CustomAnnotations = <>
+      OnFocusedRecordChanged = cxGridMainDBTableViewRoomsFocusedRecordChanged
       DataController.DataSource = dmMain.DataSourcePlace
       DataController.KeyFieldNames = 'fMeasurerIndex'
       DataController.Summary.DefaultGroupSummaryItems = <>
@@ -51,6 +52,7 @@ object fmMain: TfmMain
       OptionsBehavior.IncSearch = True
       OptionsCustomize.DataRowSizing = True
       OptionsCustomize.GroupRowSizing = True
+      OptionsData.Editing = False
       OptionsView.CellAutoHeight = True
       OptionsView.ColumnAutoWidth = True
       OptionsView.GroupByBox = False
@@ -110,6 +112,7 @@ object fmMain: TfmMain
       DataController.Summary.SummaryGroups = <>
       OptionsCustomize.ColumnFiltering = False
       OptionsCustomize.ColumnSorting = False
+      OptionsData.Editing = False
       OptionsView.CellAutoHeight = True
       OptionsView.ColumnAutoWidth = True
       OptionsView.GroupByBox = False
@@ -197,6 +200,7 @@ object fmMain: TfmMain
     object blbShowMeasurersToCheck: TdxBarLargeButton
       Caption = #1055#1086#1082#1072#1079#1072#1090#1100' '#1089#1095#1077#1090#1095#1080#1082#1080' '#1074' '#1074#1099#1073#1088#1072#1085#1085#1086#1084' '#1076#1086#1084#1077', '#1082#1086#1090#1086#1088#1099#1084' '#1090#1088#1077#1073#1091#1077#1090#1089#1103' '#1087#1086#1074#1077#1088#1082#1072
       Category = 0
+      Enabled = False
       Hint = #1055#1086#1082#1072#1079#1072#1090#1100' '#1089#1095#1077#1090#1095#1080#1082#1080' '#1074' '#1074#1099#1073#1088#1072#1085#1085#1086#1084' '#1076#1086#1084#1077', '#1082#1086#1090#1086#1088#1099#1084' '#1090#1088#1077#1073#1091#1077#1090#1089#1103' '#1087#1086#1074#1077#1088#1082#1072
       Visible = ivAlways
       OnClick = blbShowMeasurersToCheckClick
