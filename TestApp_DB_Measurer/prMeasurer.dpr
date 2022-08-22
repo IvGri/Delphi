@@ -13,6 +13,5 @@ begin
   Application.MainFormOnTaskbar := True;
   Application.CreateForm(TfmMain, fmMain);
   Application.CreateForm(TdmMain, dmMain);
-  Application.CreateForm(TfmMeasurersToCheck, fmMeasurersToCheck);
   Application.Run;
 end.
