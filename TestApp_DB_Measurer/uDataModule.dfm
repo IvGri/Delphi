@@ -3,10 +3,9 @@ object dmMain: TdmMain
   Height = 173
   Width = 373
   object ADOConnection: TADOConnection
-    Connected = True
     ConnectionString = 
       'Provider=Microsoft.Jet.OLEDB.4.0;Data Source=D:\Work\GitHub\Delp' +
-      'hi\TestApp_DB_Measurer\TestDB.mdb;Persist Security Info=False'
+      'hi\TestApp_DB_Measurer\TestDB.mdb;Persist Security Info=False;'
     LoginPrompt = False
     Mode = cmReadWrite
     Provider = 'Microsoft.Jet.OLEDB.4.0'
@@ -14,7 +13,6 @@ object dmMain: TdmMain
     Top = 8
   end
   object ADODataSetPlace: TADODataSet
-    Active = True
     Connection = ADOConnection
     CursorType = ctStatic
     CommandText = 'select fHome, fMeasurerIndex, fRoom, fStreet from tPlace'
@@ -23,7 +21,6 @@ object dmMain: TdmMain
     Top = 64
   end
   object ADODataSetMeasurer: TADODataSet
-    Active = True
     Connection = ADOConnection
     CursorType = ctStatic
     CommandText = 'select fLastCheck, fMeasurerIndex, fNextCheck from tMeasurer'
@@ -32,7 +29,6 @@ object dmMain: TdmMain
     Top = 64
   end
   object ADODataSetMeasurerData: TADODataSet
-    Active = True
     Connection = ADOConnection
     CursorType = ctStatic
     CommandText = 'select fMeasurerIndex, fValue, fValueDate from tMeasurerData'

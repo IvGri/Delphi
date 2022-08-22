@@ -11,6 +11,7 @@ object fmMain: TfmMain
   Font.Name = 'Tahoma'
   Font.Style = []
   OldCreateOrder = False
+  OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
   object cxGridMain: TcxGrid
@@ -65,17 +66,23 @@ object fmMain: TfmMain
       object cxGridMainDBTableViewRoomsfHome1: TcxGridDBColumn
         Caption = 'Home'
         DataBinding.FieldName = 'fHome'
+        FooterAlignmentHorz = taRightJustify
+        GroupSummaryAlignment = taRightJustify
         Width = 69
       end
       object cxGridMainDBTableViewRoomsfRoom1: TcxGridDBColumn
         Caption = 'Room'
         DataBinding.FieldName = 'fRoom'
+        FooterAlignmentHorz = taRightJustify
+        GroupSummaryAlignment = taRightJustify
         Width = 69
       end
       object cxGridMainDBTableViewRoomsfMeasurerIndex1: TcxGridDBColumn
         Caption = 'MeasurerIndex'
         DataBinding.FieldName = 'fMeasurerIndex'
         Visible = False
+        FooterAlignmentHorz = taRightJustify
+        GroupSummaryAlignment = taRightJustify
         Width = 69
       end
     end
@@ -117,10 +124,14 @@ object fmMain: TfmMain
         Caption = 'MeasurerIndex'
         DataBinding.FieldName = 'fMeasurerIndex'
         Visible = False
+        FooterAlignmentHorz = taRightJustify
+        GroupSummaryAlignment = taRightJustify
       end
       object cxGridMainDBTableViewMeasurerDatafValue: TcxGridDBColumn
         Caption = 'Value'
         DataBinding.FieldName = 'fValue'
+        FooterAlignmentHorz = taRightJustify
+        GroupSummaryAlignment = taRightJustify
       end
       object cxGridMainDBTableViewMeasurerDatafValueDate: TcxGridDBColumn
         Caption = 'ValueDate'

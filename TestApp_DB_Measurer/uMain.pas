@@ -22,6 +22,7 @@ type
     cxGridMainDBTableViewMeasurerDatafMeasurerIndex: TcxGridDBColumn;
     cxGridMainDBTableViewMeasurerDatafValue: TcxGridDBColumn;
     cxGridMainDBTableViewMeasurerDatafValueDate: TcxGridDBColumn;
+    procedure FormShow(Sender: TObject);
   private
     { Private declarations }
   public
@@ -34,5 +35,16 @@ var
 implementation
 
 {$R *.dfm}
+
+uses
+  uDataModule;
+
+procedure TfmMain.FormShow(Sender: TObject);
+begin
+  dmMain.ADOConnection.Connected := True;
+  dmMain.ADODataSetPlace.Active := True;
+  dmMain.ADODataSetMeasurer.Active := True;
+  dmMain.ADODataSetMeasurerData.Active := True;
+end;
 
 end.
