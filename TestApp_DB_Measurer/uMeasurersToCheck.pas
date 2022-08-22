@@ -51,7 +51,7 @@ begin
       end;
     end
     else
-      ShowMessage('There is no measurers to check');
+      MessageDlg('Measurers in the selected location don''t require check for now', mtInformation, [TMsgDlgBtn.mbOK], 0);
   finally
     dmMain.ADOqMeasurersToCheck.Active := False;
   end;
