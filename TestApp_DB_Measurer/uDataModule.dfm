@@ -34,6 +34,7 @@ object dmMain: TdmMain
     Top = 64
   end
   object dsMeasurersToCheck: TDataSource
+    DataSet = ADOqMeasurersToCheck
     Left = 208
     Top = 112
   end
