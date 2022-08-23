@@ -3,11 +3,11 @@ object fmMeasurersToCheck: TfmMeasurersToCheck
   Top = 0
   BorderStyle = bsSizeToolWin
   Caption = 'Measurers, that need check'
-  ClientHeight = 235
-  ClientWidth = 384
+  ClientHeight = 91
+  ClientWidth = 284
   Color = clBtnFace
   Constraints.MinHeight = 130
-  Constraints.MinWidth = 400
+  Constraints.MinWidth = 300
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
   Font.Height = -11
@@ -20,10 +20,12 @@ object fmMeasurersToCheck: TfmMeasurersToCheck
   object grMain: TcxGrid
     Left = 0
     Top = 0
-    Width = 384
-    Height = 235
+    Width = 284
+    Height = 91
     Align = alClient
     TabOrder = 0
+    ExplicitWidth = 384
+    ExplicitHeight = 235
     object grMainDBTableView: TcxGridDBTableView
       Navigator.Buttons.CustomButtons = <>
       ScrollbarAnnotations.CustomAnnotations = <>
@@ -37,6 +39,9 @@ object fmMeasurersToCheck: TfmMeasurersToCheck
       OptionsData.DeletingConfirmation = False
       OptionsData.Editing = False
       OptionsData.Inserting = False
+      OptionsSelection.MultiSelect = True
+      OptionsSelection.CellMultiSelect = True
+      OptionsSelection.InvertSelect = False
       OptionsView.CellAutoHeight = True
       OptionsView.ColumnAutoWidth = True
       OptionsView.GroupByBox = False
