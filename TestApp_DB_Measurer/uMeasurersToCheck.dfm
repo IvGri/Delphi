@@ -8,11 +8,6 @@ object fmMeasurersToCheck: TfmMeasurersToCheck
   Color = clBtnFace
   Constraints.MinHeight = 130
   Constraints.MinWidth = 300
-  Font.Charset = DEFAULT_CHARSET
-  Font.Color = clWindowText
-  Font.Height = -11
-  Font.Name = 'Tahoma'
-  Font.Style = []
   OldCreateOrder = False
   Position = poMainFormCenter
   PixelsPerInch = 96
@@ -24,12 +19,11 @@ object fmMeasurersToCheck: TfmMeasurersToCheck
     Height = 91
     Align = alClient
     TabOrder = 0
-    ExplicitWidth = 384
-    ExplicitHeight = 235
     object grMainDBTableView: TcxGridDBTableView
       Navigator.Buttons.CustomButtons = <>
       ScrollbarAnnotations.CustomAnnotations = <>
       DataController.DataSource = dmMain.dsMeasurersToCheck
+      DataController.KeyFieldNames = 'Measurer'
       DataController.Summary.DefaultGroupSummaryItems = <>
       DataController.Summary.FooterSummaryItems = <>
       DataController.Summary.SummaryGroups = <>
@@ -47,6 +41,7 @@ object fmMeasurersToCheck: TfmMeasurersToCheck
       OptionsView.GroupByBox = False
       OptionsView.Header = False
       object grMainDBTableViewColumn: TcxGridDBColumn
+        DataBinding.FieldName = 'Measurer'
         DataBinding.IsNullValueType = True
       end
     end

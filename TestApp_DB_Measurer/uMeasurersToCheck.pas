@@ -3,10 +3,10 @@ unit uMeasurersToCheck;
 interface
 
 uses
-  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms, Dialogs, Menus, StdCtrls, DB,
-  dxForms, cxGraphics, cxControls, cxLookAndFeels, cxLookAndFeelPainters, cxStyles, cxCustomData, cxFilter, cxData,
-  cxDataStorage, cxEdit, cxNavigator, dxDateRanges, dxScrollbarAnnotations, cxDBData, cxGridLevel, cxClasses,
-  cxGridCustomView, cxGridCustomTableView, cxGridTableView, cxGridDBTableView, cxGrid, dxMessageDialog;
+  Windows, SysUtils, Classes, Controls, Forms, Dialogs, DB,
+  dxForms, dxMessageDialog, cxGraphics, cxControls, cxLookAndFeels, cxLookAndFeelPainters, cxStyles, cxCustomData,
+  cxFilter, cxData, cxDataStorage, cxEdit, cxNavigator, dxDateRanges, dxScrollbarAnnotations, cxDBData, cxGridLevel,
+  cxGridCustomTableView, cxGridTableView, cxGridDBTableView, cxClasses, cxGridCustomView, cxGrid;
 
 type
   TfmMeasurersToCheck = class(TdxForm)
@@ -41,11 +41,9 @@ begin
       AForm := TfmMeasurersToCheck.Create(Application.MainForm);
       try
         AForm.Caption := Format(CCaptionPattern, [AStreet, AHouse]);
-
-        AForm.grMainDBTableView.DataController.DataSource := dmMain.dsMeasurersToCheck;
-        AForm.grMainDBTableView.DataController.KeyFieldNames := 'ID';
-        AForm.grMainDBTableViewColumn.DataBinding.FieldName := 'ID';
-
+//        AForm.grMainDBTableView.DataController.DataSource := dmMain.dsMeasurersToCheck;
+//        AForm.grMainDBTableView.DataController.KeyFieldNames := 'ID';
+//        AForm.grMainDBTableViewColumn.DataBinding.FieldName := 'ID';
         AForm.ShowModal;
       finally
         AForm.Free;
