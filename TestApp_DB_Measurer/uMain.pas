@@ -103,14 +103,7 @@ begin
       try
         if dmMain.ADOqUpdateReading.ExecSQL <> 1 then
           raise EDatabaseError.Create('');
-//        grMainDBTableViewLR.DataController.BeginFullUpdate;
-//        try
-//          dmMain.ADOdsLocationsWithReadings.Close;
-//          dmMain.ADOdsLocationsWithReadings.Open;
-          dmMain.ADOdsLocationsWithReadings.Refresh;
-//        finally
-//          grMainDBTableViewLR.DataController.EndFullUpdate;
-//        end;
+        dmMain.ADOdsLocationsWithReadings.Refresh;
       except
         dxMessageDlg('Attempt to update measurer ' + AMeasurer + ' reading has failed', mtError, [mbOK], 0);
       end;
