@@ -91,21 +91,26 @@ end;
 procedure TfmMain.blbUpdateReadingClick(Sender: TObject);
 var
   AMeasurer: string;
+  ASerialNumber: Integer;
 begin
   FUpdatingReading := VarToStr(GetFocusedRowValue(grMainDBTableViewLRReading));
-  AMeasurer := VarToStr(GetFocusedRowValue(grMainDBTableViewLRSerialNumber));
+  ASerialNumber := GetFocusedRowValue(grMainDBTableViewLRSerialNumber);
+  AMeasurer := 'measurer ' + VarToStr(ASerialNumber) + ' at "' +
+    VarToStr(GetFocusedRowValue(grMainDBTableViewLRStreet)) + ', ' +
+    VarToStr(GetFocusedRowValue(grMainDBTableViewLRHouse)) + ', ' +
+    VarToStr(GetFocusedRowValue(grMainDBTableViewLRRoom)) + '"';
   try
-    if dxInputQuery('Update measurer ' + AMeasurer + ' reading', 'Input actual reading:', FUpdatingReading,
+    if dxInputQuery('Update measurer reading', 'Input actual reading of ' + AMeasurer + ':', FUpdatingReading,
       MeasurerValueUpdaterValidationProc) then
     begin
       dmMain.ADOqUpdateReading.Parameters.ParamValues['pNewReading'] := StrToInt(FUpdatingReading);
-      dmMain.ADOqUpdateReading.Parameters.ParamValues['pSerialNumber'] := StrToInt(AMeasurer);
+      dmMain.ADOqUpdateReading.Parameters.ParamValues['pSerialNumber'] := ASerialNumber;
       try
         if dmMain.ADOqUpdateReading.ExecSQL <> 1 then
           raise EDatabaseError.Create('');
         dmMain.ADOdsLocationsWithReadings.Refresh;
       except
-        dxMessageDlg('Attempt to update measurer ' + AMeasurer + ' reading has failed', mtError, [mbOK], 0);
+        dxMessageDlg('Attempt to update reading of ' + AMeasurer + ' has failed', mtError, [mbOK], 0);
       end;
     end;
   finally
