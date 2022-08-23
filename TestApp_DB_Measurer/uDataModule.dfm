@@ -3,11 +3,9 @@ object dmMain: TdmMain
   Height = 165
   Width = 421
   object ADOConnection: TADOConnection
-    Connected = True
     ConnectionString = 
       'Provider=Microsoft.Jet.OLEDB.4.0;Data Source=D:\Work\GitHub\Delp' +
-      'hi\TestApp_DB_Measurer\MeasurersDB.mdb;Persist Security Info=Fal' +
-      'se'
+      'hi\TestApp_DB_Measurer\MeasurersDB.mdb;'
     LoginPrompt = False
     Mode = cmReadWrite
     Provider = 'Microsoft.Jet.OLEDB.4.0'
@@ -15,7 +13,6 @@ object dmMain: TdmMain
     Top = 8
   end
   object ADOdsLocationsWithReadings: TADODataSet
-    Active = True
     Connection = ADOConnection
     CursorType = ctStatic
     CommandText = 
