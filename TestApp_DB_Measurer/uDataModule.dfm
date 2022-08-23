@@ -1,7 +1,7 @@
 object dmMain: TdmMain
   OldCreateOrder = False
   Height = 165
-  Width = 421
+  Width = 413
   object ADOConnection: TADOConnection
     ConnectionString = 
       'Provider=Microsoft.Jet.OLEDB.4.0;Data Source=D:\Work\GitHub\Delp' +
@@ -16,8 +16,9 @@ object dmMain: TdmMain
     Connection = ADOConnection
     CursorType = ctStatic
     CommandText = 
-      'SELECT L.ID, L.Street, L.House, L.Room, R.Reading FROM Locations' +
-      ' AS L, Readings AS R WHERE L.ID = R.ID'
+      'SELECT'#13#10'  L.Street, L.House, L.Room, M.Reading, M.SerialNumber'#13#10 +
+      'FROM'#13#10'  Locations AS L, Measurers AS M'#13#10'WHERE'#13#10'  L.Measurer = M.' +
+      'SerialNumber'
     Parameters = <>
     Left = 64
     Top = 64
@@ -42,9 +43,9 @@ object dmMain: TdmMain
       end>
     SQL.Strings = (
       'SELECT'
-      '  L.ID'
+      '  C.Measurer'
       'FROM'
-      '  Locations AS L, Checks as C'
+      '  Checks as C, Locations AS L'
       'WHERE'
       '  C.NextCheck <= NOW()'
       '  AND'
@@ -52,7 +53,7 @@ object dmMain: TdmMain
       '  AND'
       '  L.House = :pHouse'
       '  AND'
-      '  L.ID = C.ID')
+      '  C.Measurer = L.Measurer')
     Left = 208
     Top = 64
   end
@@ -70,18 +71,18 @@ object dmMain: TdmMain
         Value = Null
       end
       item
-        Name = 'pUpdatingID'
+        Name = 'pSerialNumber'
         DataType = ftInteger
         Value = Null
       end>
     SQL.Strings = (
       'UPDATE'
-      '  Readings'
+      '  Measurers'
       'SET'
       '  Reading = :pNewReading,'
       '  ReadingDate = NOW()'
       'WHERE'
-      '  ID = :pUpdatingID')
+      '  SerialNumber = :pSerialNumber')
     Left = 336
     Top = 64
   end
