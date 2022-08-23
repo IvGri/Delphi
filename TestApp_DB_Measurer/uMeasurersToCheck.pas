@@ -28,6 +28,7 @@ uses
 procedure ShowMeasurersToCheck(const AStreet: string; const AHouse: Integer);
 const
   CCaptionPattern = 'Measurers, that need check at "%s, %d"';
+  CInformationPattern = 'Measurers at "%s, %d" don''t require check for now';
 var
   AForm: TfmMeasurersToCheck;
 begin
@@ -51,7 +52,7 @@ begin
       end;
     end
     else
-      MessageDlg('Measurers in the selected location don''t require check for now', mtInformation, [TMsgDlgBtn.mbOK], 0);
+      MessageDlg(Format(CInformationPattern, [AStreet, AHouse]), mtInformation, [TMsgDlgBtn.mbOK], 0);
   finally
     dmMain.ADOqMeasurersToCheck.Active := False;
   end;
