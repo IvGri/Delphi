@@ -35,7 +35,7 @@ begin
   dmMain.ADOqMeasurersToCheck.Parameters.ParamValues['pStreet'] := AStreet;
   dmMain.ADOqMeasurersToCheck.Parameters.ParamValues['pHouse'] := AHouse;
   try
-    dmMain.ADOqMeasurersToCheck.Active := True;
+    dmMain.ADOqMeasurersToCheck.Open;
     if dmMain.ADOqMeasurersToCheck.RecordCount > 0 then
     begin
       AForm := TfmMeasurersToCheck.Create(Application.MainForm);
@@ -52,9 +52,9 @@ begin
       end;
     end
     else
-      dxMessageDlg(Format(CInformationPattern, [AStreet, AHouse]), mtInformation, [TMsgDlgBtn.mbOK], 0);
+      dxMessageDlg(Format(CInformationPattern, [AStreet, AHouse]), mtInformation, [mbOK], 0);
   finally
-    dmMain.ADOqMeasurersToCheck.Active := False;
+    dmMain.ADOqMeasurersToCheck.Close;
   end;
 end;
 
