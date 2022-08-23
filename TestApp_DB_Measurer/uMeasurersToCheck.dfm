@@ -24,9 +24,6 @@ object fmMeasurersToCheck: TfmMeasurersToCheck
     Height = 235
     Align = alClient
     TabOrder = 0
-    ExplicitTop = 22
-    ExplicitWidth = 364
-    ExplicitHeight = 200
     object grMainDBTableView: TcxGridDBTableView
       Navigator.Buttons.CustomButtons = <>
       ScrollbarAnnotations.CustomAnnotations = <>

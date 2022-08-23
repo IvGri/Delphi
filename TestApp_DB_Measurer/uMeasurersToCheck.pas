@@ -28,12 +28,11 @@ uses
 procedure ShowMeasurersToCheck(const AStreet: string; const AHouse: Integer);
 const
   CCaptionPattern = 'Measurers, that need check at "%s, %d"';
-  CSQLPattern = 'SELECT L.ID FROM Locations AS L, Checks as C WHERE C.NextCheck <= NOW() AND L.Street = ''%s'' AND L.House = %d';
 var
   AForm: TfmMeasurersToCheck;
 begin
-  dmMain.ADOqMeasurersToCheck.SQL.Clear;
-  dmMain.ADOqMeasurersToCheck.SQL.Add(Format(CSQLPattern, [AStreet, AHouse]));
+  dmMain.ADOqMeasurersToCheck.Parameters.ParamValues['pStreet'] := AStreet;
+  dmMain.ADOqMeasurersToCheck.Parameters.ParamValues['pHouse'] := AHouse;
   try
     dmMain.ADOqMeasurersToCheck.Active := True;
     if dmMain.ADOqMeasurersToCheck.RecordCount > 0 then

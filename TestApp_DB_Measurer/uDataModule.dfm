@@ -4,7 +4,10 @@ object dmMain: TdmMain
   Width = 301
   object ADOConnection: TADOConnection
     Connected = True
-    ConnectionString = 'Provider=Microsoft.Jet.OLEDB.4.0;Data Source=MeasurersDB.mdb;'
+    ConnectionString = 
+      'Provider=Microsoft.Jet.OLEDB.4.0;Data Source=D:\Work\GitHub\Delp' +
+      'hi\TestApp_DB_Measurer\MeasurersDB.mdb;Persist Security Info=Fal' +
+      'se'
     LoginPrompt = False
     Mode = cmReadWrite
     Provider = 'Microsoft.Jet.OLEDB.4.0'
@@ -29,7 +32,32 @@ object dmMain: TdmMain
   end
   object ADOqMeasurersToCheck: TADOQuery
     Connection = ADOConnection
-    Parameters = <>
+    Parameters = <
+      item
+        Name = 'pStreet'
+        Attributes = [paNullable]
+        DataType = ftString
+        Value = Null
+      end
+      item
+        Name = 'pHouse'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Value = Null
+      end>
+    SQL.Strings = (
+      'SELECT'
+      '  L.ID'
+      'FROM'
+      '  Locations AS L, Checks as C'
+      'WHERE'
+      '  C.NextCheck <= NOW()'
+      '  AND'
+      '  L.Street = :pStreet'
+      '  AND'
+      '  L.House = :pHouse'
+      '  AND'
+      '  L.ID = C.ID')
     Left = 208
     Top = 64
   end
