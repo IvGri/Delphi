@@ -1,7 +1,7 @@
 object dmMain: TdmMain
   OldCreateOrder = False
   Height = 165
-  Width = 301
+  Width = 421
   object ADOConnection: TADOConnection
     Connected = True
     ConnectionString = 
@@ -63,5 +63,29 @@ object dmMain: TdmMain
     DataSet = ADOqMeasurersToCheck
     Left = 208
     Top = 112
+  end
+  object ADOqUpdateReading: TADOQuery
+    Connection = ADOConnection
+    Parameters = <
+      item
+        Name = 'pNewReading'
+        DataType = ftInteger
+        Value = Null
+      end
+      item
+        Name = 'pUpdatingID'
+        DataType = ftInteger
+        Value = Null
+      end>
+    SQL.Strings = (
+      'UPDATE'
+      '  Readings'
+      'SET'
+      '  Reading = :pNewReading,'
+      '  ReadingDate = NOW()'
+      'WHERE'
+      '  ID = :pUpdatingID')
+    Left = 336
+    Top = 64
   end
 end

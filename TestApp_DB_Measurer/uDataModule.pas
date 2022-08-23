@@ -12,6 +12,7 @@ type
     dsLocationsWithReadings: TDataSource;
     ADOqMeasurersToCheck: TADOQuery;
     dsMeasurersToCheck: TDataSource;
+    ADOqUpdateReading: TADOQuery;
   end;
 
 var
