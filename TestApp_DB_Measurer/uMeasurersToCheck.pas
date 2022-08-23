@@ -6,7 +6,7 @@ uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms, Dialogs, Menus, StdCtrls, DB,
   dxForms, cxGraphics, cxControls, cxLookAndFeels, cxLookAndFeelPainters, cxStyles, cxCustomData, cxFilter, cxData,
   cxDataStorage, cxEdit, cxNavigator, dxDateRanges, dxScrollbarAnnotations, cxDBData, cxGridLevel, cxClasses,
-  cxGridCustomView, cxGridCustomTableView, cxGridTableView, cxGridDBTableView, cxGrid;
+  cxGridCustomView, cxGridCustomTableView, cxGridTableView, cxGridDBTableView, cxGrid, dxMessageDialog;
 
 type
   TfmMeasurersToCheck = class(TdxForm)
@@ -52,7 +52,7 @@ begin
       end;
     end
     else
-      MessageDlg(Format(CInformationPattern, [AStreet, AHouse]), mtInformation, [TMsgDlgBtn.mbOK], 0);
+      dxMessageDlg(Format(CInformationPattern, [AStreet, AHouse]), mtInformation, [TMsgDlgBtn.mbOK], 0);
   finally
     dmMain.ADOqMeasurersToCheck.Active := False;
   end;
