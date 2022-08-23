@@ -20,7 +20,7 @@ type
     blbShowMeasurersToCheck: TdxBarLargeButton;
     blbUpdateReading: TdxBarLargeButton;
     grMainDBTableViewLR: TcxGridDBTableView;
-    grMainDBTableViewLRID: TcxGridDBColumn;
+    grMainDBTableViewLRSerialNumber: TcxGridDBColumn;
     grMainDBTableViewLRStreet: TcxGridDBColumn;
     grMainDBTableViewLRHouse: TcxGridDBColumn;
     grMainDBTableViewLRRoom: TcxGridDBColumn;
@@ -93,7 +93,7 @@ var
   AMeasurer: string;
 begin
   FUpdatingReading := VarToStr(GetFocusedRowValue(grMainDBTableViewLRReading));
-  AMeasurer := VarToStr(GetFocusedRowValue(grMainDBTableViewLRID));
+  AMeasurer := VarToStr(GetFocusedRowValue(grMainDBTableViewLRSerialNumber));
   try
     if dxInputQuery('Update measurer ' + AMeasurer + ' reading', 'Input actual reading:', FUpdatingReading,
       MeasurerValueUpdaterValidationProc) then

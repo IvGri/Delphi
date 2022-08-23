@@ -5,11 +5,6 @@ object fmMain: TfmMain
   ClientHeight = 384
   ClientWidth = 550
   Color = clBtnFace
-  Font.Charset = DEFAULT_CHARSET
-  Font.Color = clWindowText
-  Font.Height = -11
-  Font.Name = 'Tahoma'
-  Font.Style = []
   OldCreateOrder = False
   OnHide = FormHide
   OnShow = FormShow
@@ -44,7 +39,7 @@ object fmMain: TfmMain
       ScrollbarAnnotations.CustomAnnotations = <>
       OnFocusedRecordChanged = grMainDBTableViewLRFocusedRecordChanged
       DataController.DataSource = dmMain.dsLocationsWithReadings
-      DataController.KeyFieldNames = 'ID'
+      DataController.KeyFieldNames = 'SerialNumber'
       DataController.Summary.DefaultGroupSummaryItems = <>
       DataController.Summary.FooterSummaryItems = <>
       DataController.Summary.SummaryGroups = <>
@@ -57,8 +52,8 @@ object fmMain: TfmMain
       OptionsView.HeaderFilterButtonShowMode = fbmSmartTag
       OptionsView.Indicator = True
       OptionsView.ShowColumnFilterButtons = sfbAlways
-      object grMainDBTableViewLRID: TcxGridDBColumn
-        DataBinding.FieldName = 'ID'
+      object grMainDBTableViewLRSerialNumber: TcxGridDBColumn
+        DataBinding.FieldName = 'SerialNumber'
         Visible = False
       end
       object grMainDBTableViewLRStreet: TcxGridDBColumn
@@ -109,11 +104,6 @@ object fmMain: TfmMain
     end
   end
   object bmMain: TdxBarManager
-    Font.Charset = DEFAULT_CHARSET
-    Font.Color = clWindowText
-    Font.Height = -12
-    Font.Name = 'Segoe UI'
-    Font.Style = []
     Categories.Strings = (
       'Default')
     Categories.ItemsVisibles = (
