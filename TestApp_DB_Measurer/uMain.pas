@@ -3,10 +3,11 @@ unit uMain;
 interface
 
 uses
-  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms, Dialogs, cxGraphics, cxControls, DB,
-  dxRibbonForm, cxLookAndFeels, cxLookAndFeelPainters, cxStyles, cxCustomData, cxFilter, cxData, cxDataStorage, cxEdit,
-  cxNavigator, dxDateRanges, dxScrollbarAnnotations, cxDBData, cxGridCustomTableView, cxGridTableView, cxGridDBTableView,
-  cxGridLevel, cxClasses, cxGridCustomView, cxGrid, dxCore, dxRibbonSkins, dxRibbon, dxBar, dxInputDialogs, dxMessageDialog;
+  Windows, SysUtils, Variants, Classes, Controls, Dialogs, DB,
+  dxRibbonForm, dxInputDialogs, dxMessageDialog, cxClasses, cxGraphics, cxControls, dxCore, dxBar, dxRibbon,
+  dxRibbonSkins, cxStyles, cxCustomData, cxLookAndFeels, cxLookAndFeelPainters, cxFilter, cxData, cxDataStorage, cxEdit,
+  cxNavigator, dxDateRanges, dxScrollbarAnnotations, cxDBData, cxGridLevel, cxGridCustomTableView, cxGridTableView,
+  cxGridDBTableView, cxGridCustomView, cxGrid;
 
 type
   TfmMain = class(TdxRibbonForm)
@@ -39,9 +40,8 @@ type
   strict private
     FUpdatingReading: string;
     //
+    function GetFocusedRowValue(AColumn: TcxGridDBColumn): Variant; inline;
     procedure MeasurerValueUpdaterValidationProc(ValueIndex: Integer; const Value: string; var IsValid: Boolean);
-  public
-    { Public declarations }
   end;
 
 var
@@ -53,6 +53,14 @@ implementation
 
 uses
   uDataModule, uMeasurersToCheck;
+
+function TfmMain.GetFocusedRowValue(AColumn: TcxGridDBColumn): Variant;
+begin
+  if grMainDBTableViewLR.Controller.FocusedRowIndex >= 0 then
+    Result := grMainDBTableViewLR.Controller.FocusedRow.Values[AColumn.Index]
+  else
+    Result := Null;
+end;
 
 procedure TfmMain.MeasurerValueUpdaterValidationProc(ValueIndex: Integer; const Value: string; var IsValid: Boolean);
 var
@@ -77,29 +85,34 @@ end;
 procedure TfmMain.blbShowMeasurersToCheckClick(Sender: TObject);
 begin
   ShowMeasurersToCheck(
-    VarToStr(grMainDBTableViewLR.Controller.FocusedRow.Values[grMainDBTableViewLRStreet.Index]),
-    grMainDBTableViewLR.Controller.FocusedRow.Values[grMainDBTableViewLRHouse.Index]);
+    VarToStr(GetFocusedRowValue(grMainDBTableViewLRStreet)), GetFocusedRowValue(grMainDBTableViewLRHouse));
 end;
 
 procedure TfmMain.blbUpdateReadingClick(Sender: TObject);
 var
-  AUpdatingID, AValue: string;
+  AMeasurer: string;
 begin
-  FUpdatingReading :=
-    grMainDBTableViewLR.Controller.FocusedRecord.DisplayTexts[grMainDBTableViewLRReading.Index];
-  AUpdatingID := grMainDBTableViewLR.Controller.FocusedRecord.DisplayTexts[grMainDBTableViewLRID.Index];
+  FUpdatingReading := VarToStr(GetFocusedRowValue(grMainDBTableViewLRReading));
+  AMeasurer := VarToStr(GetFocusedRowValue(grMainDBTableViewLRID));
   try
-    if dxInputQuery('Update measurer ' + AUpdatingID + ' reading', 'Input actual reading:', FUpdatingReading,
+    if dxInputQuery('Update measurer ' + AMeasurer + ' reading', 'Input actual reading:', FUpdatingReading,
       MeasurerValueUpdaterValidationProc) then
     begin
       dmMain.ADOqUpdateReading.Parameters.ParamValues['pNewReading'] := StrToInt(FUpdatingReading);
-      dmMain.ADOqUpdateReading.Parameters.ParamValues['pUpdatingID'] := StrToInt(AUpdatingID);
+      dmMain.ADOqUpdateReading.Parameters.ParamValues['pSerialNumber'] := StrToInt(AMeasurer);
       try
         if dmMain.ADOqUpdateReading.ExecSQL <> 1 then
-          dxMessageDlg('Reading was not updated', mtError, [mbOK], 0);
-        //TODO: update grid content
+          raise EDatabaseError.Create('');
+//        grMainDBTableViewLR.DataController.BeginFullUpdate;
+//        try
+//          dmMain.ADOdsLocationsWithReadings.Close;
+//          dmMain.ADOdsLocationsWithReadings.Open;
+          dmMain.ADOdsLocationsWithReadings.Refresh;
+//        finally
+//          grMainDBTableViewLR.DataController.EndFullUpdate;
+//        end;
       except
-        dxMessageDlg('Attempt to update reading has failed', mtError, [mbOK], 0);
+        dxMessageDlg('Attempt to update measurer ' + AMeasurer + ' reading has failed', mtError, [mbOK], 0);
       end;
     end;
   finally
