@@ -35,13 +35,11 @@ object dmMain: TdmMain
     Parameters = <
       item
         Name = 'pStreet'
-        Attributes = [paNullable]
         DataType = ftString
         Value = Null
       end
       item
         Name = 'pHouse'
-        Attributes = [paNullable]
         DataType = ftInteger
         Value = Null
       end>
