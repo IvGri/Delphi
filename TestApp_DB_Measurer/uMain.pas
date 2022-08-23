@@ -6,7 +6,7 @@ uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms, Dialogs, cxGraphics, cxControls, DB,
   dxRibbonForm, cxLookAndFeels, cxLookAndFeelPainters, cxStyles, cxCustomData, cxFilter, cxData, cxDataStorage, cxEdit,
   cxNavigator, dxDateRanges, dxScrollbarAnnotations, cxDBData, cxGridCustomTableView, cxGridTableView, cxGridDBTableView,
-  cxGridLevel, cxClasses, cxGridCustomView, cxGrid, dxCore, dxRibbonSkins, dxRibbon, dxBar;
+  cxGridLevel, cxClasses, cxGridCustomView, cxGrid, dxCore, dxRibbonSkins, dxRibbon, dxBar, dxInputDialogs, dxMessageDialog;
 
 type
   TfmMain = class(TdxRibbonForm)
@@ -37,9 +37,9 @@ type
     procedure blbShowGroupByBoxClick(Sender: TObject);
     procedure blbShowNewItemRowClick(Sender: TObject);
   strict private
-    FMeasurerUpdatingValue: Integer;
+    FUpdatingReading: string;
     //
-    procedure MeasurerValueUpdaterCloseFunc(Sender: TObject; const Values: array of string; var CanClose: Boolean);
+    procedure MeasurerValueUpdaterValidationProc(ValueIndex: Integer; const Value: string; var IsValid: Boolean);
   public
     { Public declarations }
   end;
@@ -54,9 +54,11 @@ implementation
 uses
   uDataModule, uMeasurersToCheck;
 
-procedure TfmMain.MeasurerValueUpdaterCloseFunc(Sender: TObject; const Values: array of string; var CanClose: Boolean);
+procedure TfmMain.MeasurerValueUpdaterValidationProc(ValueIndex: Integer; const Value: string; var IsValid: Boolean);
+var
+  AReading: Integer;
 begin
-  CanClose := StrToInt(Values[0]) > FMeasurerUpdatingValue;
+  IsValid := TryStrToInt(Value, AReading) and (AReading > StrToInt(FUpdatingReading));
 end;
 
 { Events }
@@ -64,7 +66,7 @@ end;
 procedure TfmMain.FormShow(Sender: TObject);
 begin
   dmMain.ADOConnection.Connected := True;
-  dmMain.ADOdsLocationsWithReadings.Active := True;
+  dmMain.ADOdsLocationsWithReadings.Open;
 end;
 
 procedure TfmMain.FormHide(Sender: TObject);
@@ -81,19 +83,27 @@ end;
 
 procedure TfmMain.blbUpdateReadingClick(Sender: TObject);
 var
-  AValues: array of string;
+  AUpdatingID, AValue: string;
 begin
-  FMeasurerUpdatingValue := 0; // TODO: get actual value
+  FUpdatingReading :=
+    grMainDBTableViewLR.Controller.FocusedRecord.DisplayTexts[grMainDBTableViewLRReading.Index];
+  AUpdatingID := grMainDBTableViewLR.Controller.FocusedRecord.DisplayTexts[grMainDBTableViewLRID.Index];
   try
-    SetLength(AValues, 1);
-    AValues[0] := IntToStr(FMeasurerUpdatingValue);
-    if InputQuery('¬вод показаний счетчика', ['”кажите актуальные показани€ счетчика X:'], AValues,
-      MeasurerValueUpdaterCloseFunc) then
+    if dxInputQuery('Update measurer ' + AUpdatingID + ' reading', 'Input actual reading:', FUpdatingReading,
+      MeasurerValueUpdaterValidationProc) then
     begin
-      // TODO: update value in DB
+      dmMain.ADOqUpdateReading.Parameters.ParamValues['pNewReading'] := StrToInt(FUpdatingReading);
+      dmMain.ADOqUpdateReading.Parameters.ParamValues['pUpdatingID'] := StrToInt(AUpdatingID);
+      try
+        if dmMain.ADOqUpdateReading.ExecSQL <> 1 then
+          dxMessageDlg('Reading was not updated', mtError, [mbOK], 0);
+        //TODO: update grid content
+      except
+        dxMessageDlg('Attempt to update reading has failed', mtError, [mbOK], 0);
+      end;
     end;
   finally
-    FMeasurerUpdatingValue := -1;
+    FUpdatingReading := '';
   end;
 end;
 
