@@ -1,10 +1,11 @@
 program prMeasurer;
 
 uses
-  Vcl.Forms,
+  Forms,
   uMain in 'uMain.pas' {fmMain},
   uDataModule in 'uDataModule.pas' {dmMain: TDataModule},
-  uMeasurersToCheck in 'uMeasurersToCheck.pas' {fmMeasurersToCheck};
+  uMeasurersToCheck in 'uMeasurersToCheck.pas' {fmMeasurersToCheck},
+  uNewMeasurerDialog in 'uNewMeasurerDialog.pas' {fmNewMeasurerDialog};
 
 {$R *.res}
 

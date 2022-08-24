@@ -1,7 +1,7 @@
 object dmMain: TdmMain
   OldCreateOrder = False
-  Height = 165
-  Width = 413
+  Height = 261
+  Width = 573
   object ADOConnection: TADOConnection
     ConnectionString = 
       'Provider=Microsoft.Jet.OLEDB.4.0;Data Source=D:\Work\GitHub\Delp' +
@@ -34,6 +34,7 @@ object dmMain: TdmMain
       item
         Name = 'pStreet'
         DataType = ftString
+        Size = -1
         Value = Null
       end
       item
@@ -85,5 +86,105 @@ object dmMain: TdmMain
       '  SerialNumber = :pSerialNumber')
     Left = 336
     Top = 64
+  end
+  object ADOqFindSerialNumber: TADOQuery
+    Connection = ADOConnection
+    Parameters = <
+      item
+        Name = 'pSerialNumber'
+        DataType = ftInteger
+        Value = Null
+      end>
+    SQL.Strings = (
+      'SELECT'
+      '  SerialNumber'
+      'FROM'
+      '  Measurers'
+      'WHERE'
+      '  SerialNumber = :pSerialNumber')
+    Left = 456
+    Top = 64
+  end
+  object ADOqAddNewMeasurerToMeasurers: TADOQuery
+    Connection = ADOConnection
+    Parameters = <
+      item
+        Name = 'pSerialNumber'
+        DataType = ftInteger
+        Value = Null
+      end
+      item
+        Name = 'pReading'
+        DataType = ftInteger
+        Value = Null
+      end>
+    SQL.Strings = (
+      'INSERT INTO'
+      '  Measurers'
+      '  (SerialNumber, Reading, ReadingDate)'
+      'VALUES'
+      '  (:pSerialNumber, :pReading, NOW())')
+    Left = 456
+    Top = 112
+  end
+  object ADOqAddNewMeasurerToChecks: TADOQuery
+    Connection = ADOConnection
+    Parameters = <
+      item
+        Name = 'pMeasurer'
+        DataType = ftInteger
+        Value = Null
+      end
+      item
+        Name = 'pPrevCheck'
+        DataType = ftDateTime
+        Value = Null
+      end
+      item
+        Name = 'pNextCheck'
+        DataType = ftDateTime
+        Value = Null
+      end>
+    SQL.Strings = (
+      'INSERT INTO'
+      '  Checks'
+      '  (Measurer, PrevCheck, NextCheck)'
+      'VALUES'
+      '  (:pMeasurer, :pPrevCheck, :pNextCheck)')
+    Left = 456
+    Top = 160
+  end
+  object ADOqAddNewMeasurerToLocations: TADOQuery
+    Connection = ADOConnection
+    Parameters = <
+      item
+        Name = 'pMeasurer'
+        DataType = ftInteger
+        Value = Null
+      end
+      item
+        Name = 'pStreet'
+        DataType = ftString
+        Size = -1
+        Value = Null
+      end
+      item
+        Name = 'pHouse'
+        DataType = ftInteger
+        Value = Null
+      end
+      item
+        Name = 'pRoom'
+        DataType = ftInteger
+        Value = Null
+      end>
+    SQL.Strings = (
+      'INSERT INTO'
+      '  Locations'
+      '  (Measurer, Street, House, Room)'
+      'VALUES'
+      '  (:pMeasurer, :pStreet, :pHouse, :pRoom)')
+    Left = 456
+    Top = 208
   end
 end

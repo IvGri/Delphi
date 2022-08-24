@@ -13,6 +13,10 @@ type
     ADOqMeasurersToCheck: TADOQuery;
     dsMeasurersToCheck: TDataSource;
     ADOqUpdateReading: TADOQuery;
+    ADOqFindSerialNumber: TADOQuery;
+    ADOqAddNewMeasurerToMeasurers: TADOQuery;
+    ADOqAddNewMeasurerToChecks: TADOQuery;
+    ADOqAddNewMeasurerToLocations: TADOQuery;
   end;
 
 var
