@@ -16,9 +16,9 @@ object dmMain: TdmMain
     Connection = ADOConnection
     CursorType = ctStatic
     CommandText = 
-      'SELECT'#13#10'  L.Street, L.House, L.Room, L.Measurer, M.Reading, M.Se' +
-      'rialNumber'#13#10'FROM'#13#10'  Locations AS L, Measurers AS M'#13#10'WHERE'#13#10'  L.M' +
-      'easurer = M.SerialNumber'
+      'SELECT'#13#10'  L.Street, L.House, L.Room, L.Measurer, L.PrevMeasurers' +
+      ', M.Reading, M.SerialNumber'#13#10'FROM'#13#10'  Locations AS L, Measurers A' +
+      'S M'#13#10'WHERE'#13#10'  L.Measurer = M.SerialNumber'
     Parameters = <>
     Left = 64
     Top = 64
