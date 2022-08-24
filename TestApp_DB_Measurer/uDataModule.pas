@@ -18,6 +18,8 @@ type
     ADOqAddNewCheck: TADOQuery;
     ADOqAddNewLocation: TADOQuery;
     ADOqDeleteFromMeasurers: TADOQuery;
+    ADOqDeleteFromChecks: TADOQuery;
+    ADOqDeleteFromLocations: TADOQuery;
   end;
 
 var

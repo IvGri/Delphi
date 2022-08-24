@@ -207,4 +207,36 @@ object dmMain: TdmMain
     Left = 592
     Top = 64
   end
+  object ADOqDeleteFromChecks: TADOQuery
+    Connection = ADOConnection
+    Parameters = <
+      item
+        Name = 'pMeasurer'
+        DataType = ftInteger
+        Value = Null
+      end>
+    SQL.Strings = (
+      'DELETE FROM'
+      '  Checks'
+      'WHERE'
+      '  Measurer = :pMeasurer')
+    Left = 592
+    Top = 112
+  end
+  object ADOqDeleteFromLocations: TADOQuery
+    Connection = ADOConnection
+    Parameters = <
+      item
+        Name = 'pMeasurer'
+        DataType = ftInteger
+        Value = Null
+      end>
+    SQL.Strings = (
+      'DELETE FROM'
+      '  Locations'
+      'WHERE'
+      '  Measurer = :pMeasurer')
+    Left = 592
+    Top = 160
+  end
 end
