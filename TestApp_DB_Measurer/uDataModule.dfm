@@ -1,7 +1,7 @@
 object dmMain: TdmMain
   OldCreateOrder = False
   Height = 261
-  Width = 573
+  Width = 686
   object ADOConnection: TADOConnection
     ConnectionString = 
       'Provider=Microsoft.Jet.OLEDB.4.0;Data Source=D:\Work\GitHub\Delp' +
@@ -105,7 +105,7 @@ object dmMain: TdmMain
     Left = 456
     Top = 64
   end
-  object ADOqAddNewMeasurerToMeasurers: TADOQuery
+  object ADOqAddNewMeasurer: TADOQuery
     Connection = ADOConnection
     Parameters = <
       item
@@ -127,7 +127,7 @@ object dmMain: TdmMain
     Left = 456
     Top = 112
   end
-  object ADOqAddNewMeasurerToChecks: TADOQuery
+  object ADOqAddNewCheck: TADOQuery
     Connection = ADOConnection
     Parameters = <
       item
@@ -154,7 +154,7 @@ object dmMain: TdmMain
     Left = 456
     Top = 160
   end
-  object ADOqAddNewMeasurerToLocations: TADOQuery
+  object ADOqAddNewLocation: TADOQuery
     Connection = ADOConnection
     Parameters = <
       item
@@ -165,7 +165,6 @@ object dmMain: TdmMain
       item
         Name = 'pStreet'
         DataType = ftString
-        Size = -1
         Value = Null
       end
       item
@@ -177,14 +176,35 @@ object dmMain: TdmMain
         Name = 'pRoom'
         DataType = ftInteger
         Value = Null
+      end
+      item
+        Name = 'pPrevMeasurers'
+        DataType = ftString
+        Value = Null
       end>
     SQL.Strings = (
       'INSERT INTO'
       '  Locations'
-      '  (Measurer, Street, House, Room)'
+      '  (Measurer, Street, House, Room, PrevMeasurers)'
       'VALUES'
-      '  (:pMeasurer, :pStreet, :pHouse, :pRoom)')
+      '  (:pMeasurer, :pStreet, :pHouse, :pRoom, :pPrevMeasurers)')
     Left = 456
     Top = 208
+  end
+  object ADOqDeleteFromMeasurers: TADOQuery
+    Connection = ADOConnection
+    Parameters = <
+      item
+        Name = 'pSerialNumber'
+        DataType = ftInteger
+        Value = Null
+      end>
+    SQL.Strings = (
+      'DELETE FROM'
+      '  Measurers'
+      'WHERE'
+      '  SerialNumber = :pSerialNumber')
+    Left = 592
+    Top = 64
   end
 end

@@ -14,9 +14,10 @@ type
     dsMeasurersToCheck: TDataSource;
     ADOqUpdateReading: TADOQuery;
     ADOqFindSerialNumber: TADOQuery;
-    ADOqAddNewMeasurerToMeasurers: TADOQuery;
-    ADOqAddNewMeasurerToChecks: TADOQuery;
-    ADOqAddNewMeasurerToLocations: TADOQuery;
+    ADOqAddNewMeasurer: TADOQuery;
+    ADOqAddNewCheck: TADOQuery;
+    ADOqAddNewLocation: TADOQuery;
+    ADOqDeleteFromMeasurers: TADOQuery;
   end;
 
 var
