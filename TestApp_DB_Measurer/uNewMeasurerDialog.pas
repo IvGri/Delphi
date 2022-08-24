@@ -114,6 +114,8 @@ begin
     if AForm.ShowModal = mrOk then
     begin
       dmMain.ADOqDeleteFromMeasurers.Parameters.ParamValues['pSerialNumber'] := AMeasurer;
+      dmMain.ADOqDeleteFromChecks.Parameters.ParamValues['pMeasurer'] := AMeasurer;
+      dmMain.ADOqDeleteFromLocations.Parameters.ParamValues['pMeasurer'] := AMeasurer;
       dmMain.ADOqAddNewMeasurer.Parameters.ParamValues['pSerialNumber'] := AForm.seSerialNumber.Value;
       dmMain.ADOqAddNewMeasurer.Parameters.ParamValues['pReading'] := AForm.seDefaultReading.Value;
       dmMain.ADOqAddNewCheck.Parameters.ParamValues['pMeasurer'] := AForm.seSerialNumber.Value;
@@ -125,8 +127,9 @@ begin
       dmMain.ADOqAddNewLocation.Parameters.ParamValues['pRoom'] := ARoom;
       dmMain.ADOqAddNewLocation.Parameters.ParamValues['pPrevMeasurers'] := APrevMeasurers + IntToStr(AMeasurer) + ';';
       try
-        Result := dmMain.ADOqDeleteFromMeasurers.ExecSQL + dmMain.ADOqAddNewCheck.ExecSQL +
-          dmMain.ADOqAddNewLocation.ExecSQL + dmMain.ADOqAddNewMeasurer.ExecSQL;
+        Result := dmMain.ADOqDeleteFromMeasurers.ExecSQL + dmMain.ADOqDeleteFromChecks.ExecSQL +
+          dmMain.ADOqDeleteFromLocations.ExecSQL + dmMain.ADOqAddNewCheck.ExecSQL + dmMain.ADOqAddNewLocation.ExecSQL +
+          dmMain.ADOqAddNewMeasurer.ExecSQL;
       except
         dxMessageDlg('Attempt to replace old measurer has failed', mtError, [mbOK], 0);
       end;
