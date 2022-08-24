@@ -46,6 +46,8 @@ type
   end;
 
   function AddNewMeasurer: Integer;
+  function ReplaceMeasurerAt(const AStreet: string; const AHouse, ARoom, AMeasurer: Integer;
+    const APrevMeasurers: string): Integer;
 
 implementation
 
@@ -68,20 +70,65 @@ begin
 
     if AForm.ShowModal = mrOk then
     begin
-      dmMain.ADOqAddNewMeasurerToMeasurers.Parameters.ParamValues['pSerialNumber'] := AForm.seSerialNumber.Value;
-      dmMain.ADOqAddNewMeasurerToMeasurers.Parameters.ParamValues['pReading'] := AForm.seDefaultReading.Value;
-      dmMain.ADOqAddNewMeasurerToChecks.Parameters.ParamValues['pMeasurer'] := AForm.seSerialNumber.Value;
-      dmMain.ADOqAddNewMeasurerToChecks.Parameters.ParamValues['pPrevCheck'] := AForm.dePrevCheck.Date;
-      dmMain.ADOqAddNewMeasurerToChecks.Parameters.ParamValues['pNextCheck'] := AForm.deNextCheck.Date;
-      dmMain.ADOqAddNewMeasurerToLocations.Parameters.ParamValues['pMeasurer'] := AForm.seSerialNumber.Value;
-      dmMain.ADOqAddNewMeasurerToLocations.Parameters.ParamValues['pStreet'] := AForm.teStreet.Text;
-      dmMain.ADOqAddNewMeasurerToLocations.Parameters.ParamValues['pHouse'] := AForm.seHouse.Value;
-      dmMain.ADOqAddNewMeasurerToLocations.Parameters.ParamValues['pRoom'] := AForm.seRoom.Value;
+      dmMain.ADOqAddNewMeasurer.Parameters.ParamValues['pSerialNumber'] := AForm.seSerialNumber.Value;
+      dmMain.ADOqAddNewMeasurer.Parameters.ParamValues['pReading'] := AForm.seDefaultReading.Value;
+      dmMain.ADOqAddNewCheck.Parameters.ParamValues['pMeasurer'] := AForm.seSerialNumber.Value;
+      dmMain.ADOqAddNewCheck.Parameters.ParamValues['pPrevCheck'] := AForm.dePrevCheck.Date;
+      dmMain.ADOqAddNewCheck.Parameters.ParamValues['pNextCheck'] := AForm.deNextCheck.Date;
+      dmMain.ADOqAddNewLocation.Parameters.ParamValues['pMeasurer'] := AForm.seSerialNumber.Value;
+      dmMain.ADOqAddNewLocation.Parameters.ParamValues['pStreet'] := AForm.teStreet.Text;
+      dmMain.ADOqAddNewLocation.Parameters.ParamValues['pHouse'] := AForm.seHouse.Value;
+      dmMain.ADOqAddNewLocation.Parameters.ParamValues['pRoom'] := AForm.seRoom.Value;
+      dmMain.ADOqAddNewLocation.Parameters.ParamValues['pPrevMeasurers'] := '';
       try
-        Result := dmMain.ADOqAddNewMeasurerToChecks.ExecSQL + dmMain.ADOqAddNewMeasurerToLocations.ExecSQL +
-          dmMain.ADOqAddNewMeasurerToMeasurers.ExecSQL;
+        Result := dmMain.ADOqAddNewCheck.ExecSQL + dmMain.ADOqAddNewLocation.ExecSQL + dmMain.ADOqAddNewMeasurer.ExecSQL;
       except
         dxMessageDlg('Attempt to add new measurer has failed', mtError, [mbOK], 0);
+      end;
+    end;
+  finally
+    AForm.Free;
+  end;
+end;
+
+function ReplaceMeasurerAt(const AStreet: string; const AHouse, ARoom, AMeasurer: Integer;
+  const APrevMeasurers: string): Integer;
+var
+  AForm: TfmNewMeasurerDialog;
+begin
+  Result := -1;
+  AForm := TfmNewMeasurerDialog.Create(Application.MainForm);
+  try
+    AForm.seSerialNumber.ValidateEdit;
+    AForm.dePrevCheck.ValidateEdit;
+    AForm.deNextCheck.ValidateEdit;
+
+    AForm.teStreet.Text := AStreet;
+    AForm.seHouse.Value := AHouse;
+    AForm.seRoom.Value := ARoom;
+    AForm.lgLocationInfo.Enabled := False;
+
+    AForm.btnAdd.Width := AForm.btnAdd.Width + 30;
+    AForm.btnAdd.Caption := 'Replace Measurer';
+
+    if AForm.ShowModal = mrOk then
+    begin
+      dmMain.ADOqDeleteFromMeasurers.Parameters.ParamValues['pSerialNumber'] := AMeasurer;
+      dmMain.ADOqAddNewMeasurer.Parameters.ParamValues['pSerialNumber'] := AForm.seSerialNumber.Value;
+      dmMain.ADOqAddNewMeasurer.Parameters.ParamValues['pReading'] := AForm.seDefaultReading.Value;
+      dmMain.ADOqAddNewCheck.Parameters.ParamValues['pMeasurer'] := AForm.seSerialNumber.Value;
+      dmMain.ADOqAddNewCheck.Parameters.ParamValues['pPrevCheck'] := AForm.dePrevCheck.Date;
+      dmMain.ADOqAddNewCheck.Parameters.ParamValues['pNextCheck'] := AForm.deNextCheck.Date;
+      dmMain.ADOqAddNewLocation.Parameters.ParamValues['pMeasurer'] := AForm.seSerialNumber.Value;
+      dmMain.ADOqAddNewLocation.Parameters.ParamValues['pStreet'] := AStreet;
+      dmMain.ADOqAddNewLocation.Parameters.ParamValues['pHouse'] := AHouse;
+      dmMain.ADOqAddNewLocation.Parameters.ParamValues['pRoom'] := ARoom;
+      dmMain.ADOqAddNewLocation.Parameters.ParamValues['pPrevMeasurers'] := APrevMeasurers + IntToStr(AMeasurer) + ';';
+      try
+        Result := dmMain.ADOqDeleteFromMeasurers.ExecSQL + dmMain.ADOqAddNewCheck.ExecSQL +
+          dmMain.ADOqAddNewLocation.ExecSQL + dmMain.ADOqAddNewMeasurer.ExecSQL;
+      except
+        dxMessageDlg('Attempt to replace old measurer has failed', mtError, [mbOK], 0);
       end;
     end;
   finally

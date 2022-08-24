@@ -25,8 +25,6 @@ object fmNewMeasurerDialog: TfmNewMeasurerDialog
     Height = 216
     Align = alClient
     TabOrder = 0
-    ExplicitWidth = 567
-    ExplicitHeight = 225
     object seDefaultReading: TcxSpinEdit
       Left = 417
       Top = 28
