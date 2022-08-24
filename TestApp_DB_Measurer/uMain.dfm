@@ -5,6 +5,11 @@ object fmMain: TfmMain
   ClientHeight = 384
   ClientWidth = 550
   Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'Tahoma'
+  Font.Style = []
   OldCreateOrder = False
   OnHide = FormHide
   OnShow = FormShow
@@ -91,6 +96,9 @@ object fmMain: TfmMain
       Groups = <
         item
           ToolbarName = 'bMainActions'
+        end
+        item
+          ToolbarName = 'bMeasurerActions'
         end>
       Index = 0
     end
@@ -104,6 +112,11 @@ object fmMain: TfmMain
     end
   end
   object bmMain: TdxBarManager
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -12
+    Font.Name = 'Segoe UI'
+    Font.Style = []
     Categories.Strings = (
       'Default')
     Categories.ItemsVisibles = (
@@ -133,7 +146,7 @@ object fmMain: TfmMain
           Visible = True
           ItemName = 'blbUpdateReading'
         end>
-      OneOnRow = True
+      OneOnRow = False
       Row = 0
       UseOwnFont = False
       Visible = True
@@ -158,6 +171,26 @@ object fmMain: TfmMain
           ItemName = 'blbShowNewItemRow'
         end>
       OneOnRow = True
+      Row = 0
+      UseOwnFont = False
+      Visible = True
+      WholeRow = False
+    end
+    object bMeasurerActions: TdxBar
+      Caption = 'Measurer actions'
+      CaptionButtons = <>
+      DockedLeft = 170
+      DockedTop = 0
+      FloatLeft = 578
+      FloatTop = 2
+      FloatClientWidth = 0
+      FloatClientHeight = 0
+      ItemLinks = <
+        item
+          Visible = True
+          ItemName = 'blbAddNewMeasurer'
+        end>
+      OneOnRow = False
       Row = 0
       UseOwnFont = False
       Visible = True
@@ -194,6 +227,13 @@ object fmMain: TfmMain
       Visible = ivAlways
       ButtonStyle = bsChecked
       OnClick = blbShowNewItemRowClick
+    end
+    object blbAddNewMeasurer: TdxBarLargeButton
+      Caption = 'Add new measurer'
+      Category = 0
+      Hint = 'Add new measurer'
+      Visible = ivAlways
+      OnClick = blbAddNewMeasurerClick
     end
   end
 end

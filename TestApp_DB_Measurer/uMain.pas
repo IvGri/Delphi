@@ -29,6 +29,8 @@ type
     bGridViewSettings: TdxBar;
     blbShowGroupByBox: TdxBarLargeButton;
     blbShowNewItemRow: TdxBarLargeButton;
+    bMeasurerActions: TdxBar;
+    blbAddNewMeasurer: TdxBarLargeButton;
     procedure FormShow(Sender: TObject);
     procedure FormHide(Sender: TObject);
     procedure blbShowMeasurersToCheckClick(Sender: TObject);
@@ -37,6 +39,7 @@ type
       AFocusedRecord: TcxCustomGridRecord; ANewItemRecordFocusingChanged: Boolean);
     procedure blbShowGroupByBoxClick(Sender: TObject);
     procedure blbShowNewItemRowClick(Sender: TObject);
+    procedure blbAddNewMeasurerClick(Sender: TObject);
   strict private
     FUpdatingReading: string;
     //
@@ -52,7 +55,7 @@ implementation
 {$R *.dfm}
 
 uses
-  uDataModule, uMeasurersToCheck;
+  uDataModule, uMeasurersToCheck, uNewMeasurerDialog;
 
 function TfmMain.GetFocusedRowValue(AColumn: TcxGridDBColumn): Variant;
 begin
@@ -133,6 +136,16 @@ end;
 procedure TfmMain.blbShowNewItemRowClick(Sender: TObject);
 begin
   grMainDBTableViewLR.OptionsView.NewItemRow := blbShowNewItemRow.Down;
+end;
+
+procedure TfmMain.blbAddNewMeasurerClick(Sender: TObject);
+begin
+  if AddNewMeasurer > 0 then
+  begin
+    // TODO: Find better way to refresh grid's content
+    dmMain.ADOdsLocationsWithReadings.Close;
+    dmMain.ADOdsLocationsWithReadings.Open;
+  end;
 end;
 
 end.
