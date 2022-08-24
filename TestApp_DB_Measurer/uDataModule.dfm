@@ -1,11 +1,9 @@
 object dmMain: TdmMain
   OldCreateOrder = False
+  OnCreate = DataModuleCreate
   Height = 261
   Width = 686
   object ADOConnection: TADOConnection
-    ConnectionString = 
-      'Provider=Microsoft.Jet.OLEDB.4.0;Data Source=D:\Work\GitHub\Delp' +
-      'hi\TestApp_DB_Measurer\MeasurersDB.mdb;'
     LoginPrompt = False
     Mode = cmReadWrite
     Provider = 'Microsoft.Jet.OLEDB.4.0'
@@ -165,6 +163,7 @@ object dmMain: TdmMain
       item
         Name = 'pStreet'
         DataType = ftString
+        Size = -1
         Value = Null
       end
       item
@@ -180,6 +179,7 @@ object dmMain: TdmMain
       item
         Name = 'pPrevMeasurers'
         DataType = ftString
+        Size = -1
         Value = Null
       end>
     SQL.Strings = (

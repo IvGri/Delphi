@@ -20,6 +20,7 @@ type
     ADOqDeleteFromMeasurers: TADOQuery;
     ADOqDeleteFromChecks: TADOQuery;
     ADOqDeleteFromLocations: TADOQuery;
+    procedure DataModuleCreate(Sender: TObject);
   end;
 
 var
@@ -30,5 +31,11 @@ implementation
 {%CLASSGROUP 'Vcl.Controls.TControl'}
 
 {$R *.dfm}
+
+procedure TdmMain.DataModuleCreate(Sender: TObject);
+begin
+  ADOConnection.ConnectionString :=
+    'Provider=Microsoft.Jet.OLEDB.4.0;Data Source=MeasurersDB.mdb;'
+end;
 
 end.
