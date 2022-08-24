@@ -145,6 +145,14 @@ object fmMain: TfmMain
         item
           Visible = True
           ItemName = 'blbUpdateReading'
+        end
+        item
+          Visible = True
+          ItemName = 'blbReplaceMeasurer'
+        end
+        item
+          Visible = True
+          ItemName = 'blbShowPrevMeasurers'
         end>
       OneOnRow = False
       Row = 0
@@ -179,7 +187,7 @@ object fmMain: TfmMain
     object bMeasurerActions: TdxBar
       Caption = 'Measurer actions'
       CaptionButtons = <>
-      DockedLeft = 170
+      DockedLeft = 328
       DockedTop = 0
       FloatLeft = 578
       FloatTop = 2
@@ -234,6 +242,22 @@ object fmMain: TfmMain
       Hint = 'Add new measurer'
       Visible = ivAlways
       OnClick = blbAddNewMeasurerClick
+    end
+    object blbReplaceMeasurer: TdxBarLargeButton
+      Caption = 'Replace measurer'
+      Category = 0
+      Enabled = False
+      Hint = 'Replace measurer'
+      Visible = ivAlways
+      OnClick = blbReplaceMeasurerClick
+    end
+    object blbShowPrevMeasurers: TdxBarLargeButton
+      Caption = 'Show previous measurers'
+      Category = 0
+      Enabled = False
+      Hint = 'Show previous measurers'
+      Visible = ivAlways
+      OnClick = blbShowPrevMeasurersClick
     end
   end
 end

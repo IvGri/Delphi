@@ -31,6 +31,8 @@ type
     blbShowNewItemRow: TdxBarLargeButton;
     bMeasurerActions: TdxBar;
     blbAddNewMeasurer: TdxBarLargeButton;
+    blbReplaceMeasurer: TdxBarLargeButton;
+    blbShowPrevMeasurers: TdxBarLargeButton;
     procedure FormShow(Sender: TObject);
     procedure FormHide(Sender: TObject);
     procedure blbShowMeasurersToCheckClick(Sender: TObject);
@@ -40,6 +42,8 @@ type
     procedure blbShowGroupByBoxClick(Sender: TObject);
     procedure blbShowNewItemRowClick(Sender: TObject);
     procedure blbAddNewMeasurerClick(Sender: TObject);
+    procedure blbReplaceMeasurerClick(Sender: TObject);
+    procedure blbShowPrevMeasurersClick(Sender: TObject);
   strict private
     FUpdatingReading: string;
     //
@@ -126,6 +130,8 @@ procedure TfmMain.grMainDBTableViewLRFocusedRecordChanged(Sender: TcxCustomGridT
 begin
   blbShowMeasurersToCheck.Enabled := AFocusedRecord <> nil;
   blbUpdateReading.Enabled := AFocusedRecord <> nil;
+  blbReplaceMeasurer.Enabled := AFocusedRecord <> nil;
+  blbShowPrevMeasurers.Enabled := AFocusedRecord <> nil;
 end;
 
 procedure TfmMain.blbShowGroupByBoxClick(Sender: TObject);
@@ -146,6 +152,33 @@ begin
     dmMain.ADOdsLocationsWithReadings.Close;
     dmMain.ADOdsLocationsWithReadings.Open;
   end;
+end;
+
+procedure TfmMain.blbReplaceMeasurerClick(Sender: TObject);
+begin
+  if ReplaceMeasurerAt(VarToStr(GetFocusedRowValue(grMainDBTableViewLRStreet)),
+    GetFocusedRowValue(grMainDBTableViewLRHouse), GetFocusedRowValue(grMainDBTableViewLRRoom),
+    GetFocusedRowValue(grMainDBTableViewLRSerialNumber),
+    VarToStrDef(dmMain.ADOdsLocationsWithReadings.FieldValues['PrevMeasurers'], '')) > 0 then
+  begin
+    // TODO: Find better way to refresh grid's content
+    dmMain.ADOdsLocationsWithReadings.Close;
+    dmMain.ADOdsLocationsWithReadings.Open;
+  end;
+end;
+
+procedure TfmMain.blbShowPrevMeasurersClick(Sender: TObject);
+var
+  APrevMeasurers: string;
+begin
+  APrevMeasurers := VarToStrDef(dmMain.ADOdsLocationsWithReadings.FieldValues['PrevMeasurers'], '');
+  if APrevMeasurers <> '' then
+  begin
+    SetLength(APrevMeasurers, Length(APrevMeasurers) - 1); // Trim last ;
+    dxMessageDlg('Previous measurers at selected location:'#13#10 + APrevMeasurers, mtInformation, [mbOK], 0);
+  end
+  else
+    dxMessageDlg('Measurers at selected location has not been replaced yet', mtInformation, [mbOK], 0);
 end;
 
 end.
